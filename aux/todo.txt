@@ -1,0 +1,44 @@
+Dec 11, 2018,
+ 14:10-15:00 19:00 19:45
+Dec 12
+ 09:30 - 11:00 set github environment
+ 11:40 - 13:00 ESLint
+ 14:30 - 14:50 VSCode configuration
+
+Need to learn:
+ - JQuery
+ - GitHub
+ - ESLint
+ - how to use CSS (CSS transitions and animations.)
+ - how to draw using only HTML, CSS and JavaScript w/ jQuery (no Canvas or SVG)
+    https://www.w3schools.com/howto/howto_css_shapes.asp
+    https://stackoverflow.com/questions/12571172/creating-a-dynamic-image-in-html-with-a-transparent-background
+    how to draw a chat bar in excel: https://www.youtube.com/watch?v=xlWQRtUpuXo
+ - the ideia is having a HTML page which has a form with all possible options to draw the chart
+
+
+- Functional Requirements
+You should have a simple API to draw a bar chart. The function should be used by your HTML page
+ to render the chart into your demo page. The signature of the function should be as follows:
+
+drawBarChart(data, options, element);
+
+The data parameter will be the data the chart should work from Start with just an Array of numbers
+e.g. [1, 2, 3, 4, 5]
+
+The options parameter should be an object which has options for the chart.
+e.g. width and height of the bar chart
+
+The element parameter should be a DOM element or jQuery element that the chart will get rendered into.
+
+
+STEPS:
+- understand the order and the requirements
+- understand better chart bars
+- install, configure and run ESLint
+- set GitHub
+- understand JQuery
+- CSS, HTML, JavaScript a little bit more
+- build version 0.1 with simple possibilities
+- increment the above one
+

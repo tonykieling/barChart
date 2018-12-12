@@ -1,0 +1,19 @@
+1- branch this gist as the basis for my application
+2- create a repo on github
+3- create a directory in my vagrant and, within it, "git init" command
+4- clone the gist for my local directory:
+    git clone https://gist.github.com/5e86e844b56dd25531d1c3729cf36884.git
+The git configuration is done!
+5- in order to commit my auxiliar local files:
+6- first, set the remote server by
+    git remote add origin https://github.com/tonykieling/barChart.git
+7- now, add files which will be commited by
+    git add * (it will prepare all files)
+8- commit them by
+    git commit -m "first commit - this is a comment"
+9- finish the procedure by
+    git push origin master
+
+GitHubGist is an extenstion of GitHub used to share small things in a easy way,
+ such as parts of code or small files whithout create a repo structure.
+ We can clone as it was a repo.

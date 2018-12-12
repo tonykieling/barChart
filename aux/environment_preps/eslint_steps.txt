@@ -1,0 +1,16 @@
+1- inside VSCode, install ESLint extension
+2- in my physical machine (not the vagrant), I had to install node and
+ npm. After that, I installed ESLint by:
+    sudo npm install -g eslint
+3- afterwards, had to cset up the ESLint by:
+    eslint --init
+
+Now, the configuration is done but need to know how to use
+ ESLint and the configuration about the editor seems not working.
+
+Solution:
+  1- add the extension editorconfig in VSCode
+  2-  npm install -g editorconfig
+  3- restart VSCode
+
+Environment is done!
