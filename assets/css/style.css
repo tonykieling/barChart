@@ -1,0 +1,21 @@
+/*
+ Global styles
+*/
+
+body{
+  background: grey;
+  font-family: Arial, Helvetica, sans-serif
+}
+h1:hover{
+  color: blueviolet
+}
+
+/*
+Header and Footer
+*/
+/* ... */
+
+
+/*
+specific styles are here
+*/
