@@ -8,7 +8,14 @@ Dec 13
   08:00 - 09:00  JQuery study
 Dec 14
   08:00 - 09:00 CSS
-  11:00 - asd   JQuery
+  11:00 - 12:30   JQuery
+
+missing (at least):
+ lines in the chart to give reference (50%, 25%, etc)
+ options (color, size, set of values, labels, etc)
+ element - where to place the chart
+ (negative numbers (one more frame bellow?))
+
 
 Need to learn:
  - JQuery

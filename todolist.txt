@@ -1,0 +1,14 @@
+drawBarChart(argument, options, element)
+- argument may be an simple array, which will be the columns or
+
+- option should be:
+  "labelx" plus the name of the label x in the chart
+  "labely" plus the name of the label y in the chart
+  i.e: drawBarChart([15, 30, 40, 20], ("labelx": "label of x", "labely": "label of y"), id=div10);
+
+[ [10, 20, 10], [30, 40, 30], [50, 60, 60]]
+
+
+
+
+10 20 10    30 40 30    50 60 50

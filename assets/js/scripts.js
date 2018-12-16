@@ -1,21 +1,23 @@
 $(function(){
   "use strict";
 
-  function bigNumb(numbers){
-    return Math.max(...numbers);
-  }
+  function barC(argum, option = "", element = ""){
+    if (option){
+      console.log("element: " + element);
+    } else {
+      console.log("no options");
+    }
 
-  function barC(argum){
-  console.log("arguments: " + argum);
-  let biggestNumber = bigNumb(argum);
-  let ceilChart = Math.ceil(biggestNumber * 1.05); // 5% margin to the biggest number
-  console.log("big: " + biggestNumber);
-  // defineHeight(argum, frameHeigth);
+    console.log("arguments: " + argum);
+    let biggestNumber = Math.max(...argum);;
+    let ceilChart = Math.ceil(biggestNumber * 1.05); // 5% margin to the biggest number
+    console.log("big: " + biggestNumber);
 
     //frame creation
     var frame = $("<div></div>");
-    var frameHeigth = 300;
-    var frameWidth = 400;
+    var frameHeigth = option.frameHeigth;
+    var frameWidth = option.frameWidth;
+
     $(frame).height(frameHeigth);
     $(frame).css({
       "position": "relative",
@@ -23,8 +25,8 @@ $(function(){
       "height": frameHeigth,
       "background-color": "green"
     });
-    $("body").append(frame);  //frame append to the body element
 
+    $("body").append(frame);  //frame append to the body element
 
     let columnsNumber = argum.length;
     console.log("columnsNumber-: " + columnsNumber);
@@ -36,6 +38,7 @@ $(function(){
     let left = 0;
     let columns = [];
     console.log("columnWidth: " + columnWidth);
+
 
     for (let i in argum){
       console.log(`${i}o item: ${argum[i]}`);
@@ -64,12 +67,42 @@ $(function(){
         "font-family": "Arial",
       });
       $(frame).append(columns[i]);
-
-
     }
 
+    //set the X label, regarding the argument received from options
+    let xLabel = $("<div></div>");
+    $(xLabel).html(option.xLabelText);
+    $(xLabel).css({
+      "position":"relative",
+      "text-align": "center",
+      // "background-color": "blue",
+      "left": 0,
+      "bottom": - 2 - (frameHeigth)
+      });
+    $(frame).append(xLabel);
+
+    //set the chart label, regarding the argument received from options
+    let chartLabel = $("<div></div>");
+    $(chartLabel).html(option.chartLabelText);
+    $(chartLabel).css({
+      "font-size": 30,
+      "position":"relative",
+      "text-align": "center",
+      "color": option.chartLabelColor,
+      "left": 0,
+      "top": -50});
+    // });
+    $(frame).append(chartLabel);
+
+    $(element).append(frame);
   }
 
-barC([10, 20, 5, 70, 80, 15, 50]);
+barC([10, 2, 3, 4, 8, 6, 7, 8, 9],
+   {frameHeigth: 400, frameWidth: 500,
+     xLabelText: "Monthly $ spend", yLabelText: "IM Y", chartLabelText:"This is a bar chart!!!", chartLabelColor:"green"},
+   "#barChartPlace");
+
+// barC({"month": "jan", {"north":10, "south":20}},
+//       {"montn": "feb", {"north":20, "south": 30}});
 
 });
