@@ -12,3 +12,17 @@ drawBarChart(argument, options, element)
 
 
 10 20 10    30 40 30    50 60 50
+
+
+- multiple data
+- positioning this multiple data and get better knowledge about CSS positioning in general
+- better x and y axis
+- understand how to call scripts and functions with arguments
+
+
+- static: it is always positioned according to the normal flow of the page.
+- absolute: is positioned relative to the nearest positioned ancestor
+- relative: is positioned relative to its normal and original position.
+- fixed: it always stays in the same place even if the page is scrolled.
+- sticky: the stickied element scroll together the page until it gets the top or bottom (dependes on whether your scrool is up or down)
+

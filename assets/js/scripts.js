@@ -2,31 +2,103 @@ $(function(){
   "use strict";
 
   function barC(argum, option = "", element = ""){
-    if (option){
-      console.log("element: " + element);
-    } else {
-      console.log("no options");
+    if (!element){
+      element = "body";
     }
 
-    console.log("arguments: " + argum);
-    let biggestNumber = Math.max(...argum);;
-    let ceilChart = Math.ceil(biggestNumber * 1.05); // 5% margin to the biggest number
-    console.log("big: " + biggestNumber);
+    // have to create another frame as static
 
-    //frame creation
-    var frame = $("<div></div>");
-    var frameHeigth = option.frameHeigth;
-    var frameWidth = option.frameWidth;
-
-    $(frame).height(frameHeigth);
-    $(frame).css({
-      "position": "relative",
-      "width": frameWidth,
-      "height": frameHeigth,
-      "background-color": "green"
+    let bigFrame = $("<div></div>");
+    $(element).append(bigFrame);
+    $(bigFrame).css({
+      position: "absolute",
+      left: 10, // check this out later
+      width: option.frameWidth,
+      height: option.frameHeigth,
+      backgroundColor: "white",
     });
 
-    $("body").append(frame);  //frame append to the body element
+    //set the chart label, regarding the argument received from options
+    let chartLabel = $("<div></div>");
+    $(bigFrame).append(chartLabel);
+    $(chartLabel).html(option.chartLabelText);
+    $(chartLabel).css({
+      fontSize: 30,   // later, set a maximum limit such as 45 and minimum as 12. Default should be 30.
+      position: "relative",
+      textAlign: "center",
+      color: option.chartLabelColor,
+      // backgroundColor: yellow,
+      // left: 0,
+      // top: 0
+    });
+
+
+    let biggestNumber = Math.max(...argum);;
+    let ceilChart = Math.ceil(biggestNumber * 1.05); // 5% margin to the biggest number
+
+    //frame to the chart columns
+    var frame = $("<div></div>");
+    $(bigFrame).append(frame);
+
+    var frameHeigth = option.frameHeigth * 0.7;
+    var frameWidth = option.frameWidth * 0.7;
+
+    $(frame).css({
+      position: "relative",
+      left: 50,
+      width: frameWidth,
+      height: frameHeigth,
+      backgroundColor: "green",   //set default and user's option
+    });
+
+    // Y arrow
+    let lineY = $("<div></div>");
+    $(frame).append(lineY);
+    $(lineY).css({
+      height: frameHeigth * 1.05, // 5% bigger than the frame heigth
+      position: "relative",
+      bottom: frameHeigth * 0.025,
+      borderLeft: "solid black",
+    });
+    let arrowY = $("<div></div>");
+    $(lineY).append(arrowY);
+    $(arrowY).css({
+      position: "relative",
+      bottom: frameHeigth * 0.025,
+      left: -5,
+      border: "solid black",
+      borderWidth: "0 2px 2px 0",
+      display: "inline-block",
+      padding: "3px",
+      transform: "rotate(-135deg)"
+    });
+
+    // X arrow
+    let lineX = $("<div></div>");
+    $(frame).append(lineX);
+    $(lineX).css({
+      width: frameWidth * 1.05, // 5% bigger than the frame heigth
+      position: "relative",
+      left: (frameWidth * 0.025) * (-1),
+      top: 0,
+      borderBottom: "solid red",
+      });
+    console.log("framebottom " + frame.height());
+    let arrowX = $("<div></div>");
+    $(lineX).append(arrowX);
+    $(arrowX).css({
+      position: "absolute",
+      bottom: frameHeigth,
+      left: lineX.width() + 5,
+      bottom: frame.height(),
+      border: "solid red",
+      borderWidth: "0 2px 2px 0",
+      display: "inline-block",
+      padding: "3px",
+      transform: "rotate(-45deg)"
+    });
+
+    // $("body").append(frame);  //frame append to the body element
 
     let columnsNumber = argum.length;
     console.log("columnsNumber-: " + columnsNumber);
@@ -37,11 +109,9 @@ $(function(){
     let barBottom = 0;
     let left = 0;
     let columns = [];
-    console.log("columnWidth: " + columnWidth);
-
 
     for (let i in argum){
-      console.log(`${i}o item: ${argum[i]}`);
+      // console.log(`${i}o item: ${argum[i]}`);
       if (i == 0){
         left = spaceBtwCol;
       } else {
@@ -54,47 +124,32 @@ $(function(){
       $(columns[i]).html(argum[i]);
 
       $(columns[i]).css({
-        "position": "absolute",
-        // "top": 0,
-        "bottom": barBottom,
-        "left": left,
-        "background-color": "blue",
-        "width": columnWidth,
-        "height": ((argum[i] / ceilChart) * frameHeigth),
-        "display": "table-cell",
-        "vertical-align": "middle",
-        "text-align": "center",
-        "font-family": "Arial",
+        position: "absolute",
+        bottom: barBottom,
+        left: left,
+        backgroundColor: "blue",
+        width: columnWidth,
+        height: ((argum[i] / ceilChart) * frameHeigth),
+        display: "table-cell",
+        verticalAlign: "middle",
+        textAlign: "center",
+        fontFamily: "Arial",
       });
       $(frame).append(columns[i]);
     }
 
     //set the X label, regarding the argument received from options
     let xLabel = $("<div></div>");
+    $(frame).append(xLabel);
     $(xLabel).html(option.xLabelText);
     $(xLabel).css({
-      "position":"relative",
-      "text-align": "center",
-      // "background-color": "blue",
-      "left": 0,
-      "bottom": - 2 - (frameHeigth)
+      position: "relative",
+      textAlign: "center",
+      backgroundColor: "blue",
+      left: 0,
+      bottom: - 2 - (frameHeigth)
       });
-    $(frame).append(xLabel);
 
-    //set the chart label, regarding the argument received from options
-    let chartLabel = $("<div></div>");
-    $(chartLabel).html(option.chartLabelText);
-    $(chartLabel).css({
-      "font-size": 30,
-      "position":"relative",
-      "text-align": "center",
-      "color": option.chartLabelColor,
-      "left": 0,
-      "top": -50});
-    // });
-    $(frame).append(chartLabel);
-
-    $(element).append(frame);
   }
 
 barC([10, 2, 3, 4, 8, 6, 7, 8, 9],
