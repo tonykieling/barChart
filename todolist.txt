@@ -21,7 +21,8 @@ drawBarChart(argument, options, element)
 
 
 - static: it is always positioned according to the normal flow of the page.
-- absolute: is positioned relative to the nearest positioned ancestor
+- absolute: is positioned relative to the nearest positioned ancestor (its parent) and it is out of the flow.
+  z-index:<number>
 - relative: is positioned relative to its normal and original position.
 - fixed: it always stays in the same place even if the page is scrolled.
 - sticky: the stickied element scroll together the page until it gets the top or bottom (dependes on whether your scrool is up or down)
