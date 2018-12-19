@@ -54,3 +54,11 @@ STEPS:
 - build version 0.1 with simple possibilities
 - increment the above one
 
+v1 has to have:
+  OK- receive a simple array as data
+- chart settable (color, sizes, font-family, html, etc)
+  OK - arrows
+  OK - y axis' label (divide the axis with lines)
+    user says the number of divisions
+    option as the divisions be percentage
+- the char size has to be dynamic, regarding the size of the frame and the other elements such as labels
