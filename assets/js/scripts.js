@@ -94,6 +94,7 @@ $(function(){
       position: "absolute",
       bottom: -1 * (((frameHeigth * 1.05) - frameHeigth) / 2),
       borderLeft: "solid black",
+      zIndex: 15,
     });
     let arrowY = $("<div></div>");
     $(lineY).append(arrowY);
@@ -119,7 +120,7 @@ $(function(){
       position: "absolute",
       left: ((frameWidth * 0.05) / 2) * (-1),
       bottom: 0,
-      zIndex: 10,
+      zIndex: 15,
       borderBottom: "solid black",
       });
     let arrowX = $("<div></div>");
@@ -140,35 +141,31 @@ $(function(){
     // ++++++++++ CHART DIVISIONS ELEMENT ++++++++++
     // +++++++++++++++++++++++++++++++++++++++++++++
     //draw the Y axis divisions
-    let numberOfDivisions = 5;    //  number of divisions default
+    let numberOfDivisions = 4;    //  number of divisions default
     if (option.numberOfDivisionsYAxis){
       console.log("numberdivision = notempty");
       numberOfDivisions = option.numberOfDivisionsYAxis; //change default if user says
     }
-    console.log(numberOfDivisions);
 
     let divisionsHeigth = frameHeigth /numberOfDivisions;
     let topDivisionPos = divisionsHeigth;
 
 
+    //the values below are related to ABSOLUTE mode.
     let multTextLabelDivision = parseInt(ceilChart / numberOfDivisions); // variable to hold the number to be add in each for loop for the divisionlabel
     let textLabelDivision = multTextLabelDivision;
 
+    //check whether the user wants RELATIVE mode and apply it if so
     if ((option.typeOfDivision).toLowerCase() == "percent"){
-      console.log("type PERCENT");
+      // console.log("type PERCENT");
       multTextLabelDivision = parseInt(100 / numberOfDivisions);
       textLabelDivision = multTextLabelDivision;
       if (!option.numberOfDivisionsYAxis){
         numberOfDivisions = 4;
       }
     } else {
-      console.log("ABSOLUTE"); // default is ABSOLUTE
+      // console.log("ABSOLUTE"); // default is ABSOLUTE
     }
-
-
-    // let multTextLabelDivision = parseInt(ceilChart / numberOfDivisions); // variable to hold the number to be add in each for loop for the divisionlabel
-    // let textLabelDivision = multTextLabelDivision;
-
 
     let divisions = [];
     let labelDivision = [];
@@ -185,9 +182,16 @@ $(function(){
         borderTop: "dotted grey 1px",
         });
 
+      if (option.setDivisionsOverColumns){
+        $(divisions[countDivision]).css("zIndex", 11);
+      }
+
+
       //insert a label for each division here
       labelDivision[countDivision] = $("<div></div>");
       $(frame).append(labelDivision[countDivision]);
+
+      // the division label has to have % if it's the case
       if ((option.typeOfDivision).toLowerCase() == "percent"){
         $(labelDivision[countDivision]).html(textLabelDivision + "%");
       } else{
@@ -207,7 +211,6 @@ $(function(){
       $(labelDivision[countDivision]).css("bottom", positionp);
 
       topDivisionPos += divisionsHeigth;
-      // if ((option.typeOfDivision).toLowerCase() == "percent"){
       textLabelDivision += multTextLabelDivision;
 
     }
@@ -230,7 +233,9 @@ $(function(){
     let barBottom = 0;
     let vleft = 0;
     let columns = [];
-    let labelColumn = [];
+    let labelAxisColumn = [];
+    let labelColumns = [];
+
 
     for (let i in argum){
       // console.log(`${i}o item: ${argum[i]}`);
@@ -254,26 +259,97 @@ $(function(){
         // height: ((argum[i] * frameHeigth) / frameHeigth),
         // display: "table-cell",
         // verticalAlign: "middle",   TODO how to vertical align in a absolute positioned element????
-        textAlign: "center",
-        fontFamily: "Arial",
+        // textAlign: "center",
+        fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
+        fontSize: option.setColumnsFontSize,
         zIndex: 10,
       });
       $(frame).append(columns[i]);
 
+      // console.log("valid fontFamily: " + $(columns[i]).css("fontFamily") + " + fontSize: " + $(columns[i]).css("fontSize"));
+
+      //label within each column
+      labelColumns[i] = $("<div></div>");
+      $(columns[i]).append(labelColumns[i]);
+      $(labelColumns[i]).html(argum[i]);
+      $(labelColumns[i]).css({
+        // top: barBottom, // columns[i].css("")
+        position: "absolute",
+        backgroundColor: "red",
+        // width: 50,
+        fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
+        fontSize: option.setColumnsFontSize,
+        zIndex: 11,  //same columns[i]'s zIndex
+      });
+
+
+
+
+
+
+
+      console.log("BEFOREcolumnw: " + (parseInt($(columns[i]).css("width"))) + " - " + " labelW: " + (parseInt($(labelColumns[i]).css("width"))));
+
+      //adjust fontsize regarding column width
+      let newFontSize = parseInt($(labelColumns[i]).css("fontSize"));
+      console.log("actualFonSize: " + newFontSize);
+      if ((parseInt($(columns[i]).css("width"))) < (parseInt($(labelColumns[i]).css("width")))){
+        console.log("columnwidth smaller than labelcolumn!!!!");
+        // while((parseInt($(columns[i]).css("width"))) > (parseInt($(labelColumns[i]).css("width")))){
+          newFontSize -= 10;
+          parseInt($(columns[i]).css("fontSize", newFontSize));
+          console.log("newFontSize: " + newFontSize + "parse: " + parseInt($(columns[i]).css("fontSize")));
+          console.log("AFTERcolumnw: " + (parseInt($(columns[i]).css("width"))) + " - " + " labelW: " + (parseInt($(labelColumns[i]).css("width"))));
+
+
+      if (typeof(option.setLabelColumnPos) == "string"){
+        if (option.setLabelColumnPos.toLowerCase() == "top"){
+          // console.log("columnposition: top");
+          $(labelColumns[i]).css("top", 0);
+        } else if (option.setLabelColumnPos.toLowerCase() == "bottom"){
+          // console.log("columnposition: bottom");
+          $(labelColumns[i]).css("bottom", 0);
+
+        }else if (option.setLabelColumnPos.toLowerCase() == "middle"){
+          console.log("columnposition: middle");
+
+        } else {
+          console.log("columnposition: gonna be top (default)");
+
+        }
+      } else{
+        console.log("Please the Column Label Position parameter (setLabelColumnPos) has to be a string 'TOP', 'BOTTOM' or 'MIDDLE'.");
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       //insert a label for each column here
-      labelColumn[i] = $("<div></div>");
-      $(frame).append(labelColumn[i]);
-      $(labelColumn[i]).html(argum[i]);
-      $(labelColumn[i]).css({
+      labelAxisColumn[i] = $("<div></div>");
+      $(frame).append(labelAxisColumn[i]);
+      $(labelAxisColumn[i]).html(argum[i]);
+      $(labelAxisColumn[i]).css({
         position: "absolute",
         bottom: -20,
       });
 
-      let lw = (parseFloat($(labelColumn[i]).css("width")));
+      let lw = (parseFloat($(labelAxisColumn[i]).css("width")));
       let cw = columnWidth;
       let k1 = ((cw - lw) / 2);
       let plabel = vleft + k1;
-      $((labelColumn[i]).css("left", plabel));
+      $((labelAxisColumn[i]).css("left", plabel));
 
     }
 
@@ -285,7 +361,7 @@ $(function(){
     position: "absolute",
     // backgroundColor: "yellow",
     });
-  $((xLabel).css("bottom", (-1) * (parseFloat($(labelColumn[0]).css("height")) * 2.5 )));
+  $((xLabel).css("bottom", (-1) * (parseFloat($(labelAxisColumn[0]).css("height")) * 2.5 )));
   $((xLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xLabel).css("width")))) / 2)));
 
   // $((frame).css("heigth",
@@ -301,8 +377,9 @@ $(function(){
 
 barC([134, 201, 307, 400, 800, 600, 799, 878, 900, 700, 588],
    {frameHeigth: 500, frameWidth: 700,
-     xLabelText: "Monthly $ spend", yLabelText: "IM Y", chartLabelText:"This is the bar chart name", chartLabelColor:"green",
-    numberOfDivisionsYAxis: 5, typeOfDivision: "Percent"},
+     xLabelText: "Monthly $ spend", yLabelText: "IM Y", chartLabelText: "This is the bar chart name", chartLabelColor: "green",
+     setColumnsFont: 0, setColumnsFontSize: 20, setLabelColumnPos: "bOttOm", /*top, bottom, middle */
+     numberOfDivisionsYAxis: 10, typeOfDivision: "Percent", setDivisionsOverColumns: 0},
    "#barChartPlace");
 
 // barC({"month": "jan", {"north":10, "south":20}},

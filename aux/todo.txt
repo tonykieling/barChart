@@ -62,3 +62,5 @@ v1 has to have:
     user says the number of divisions
     option as the divisions be percentage
 - the char size has to be dynamic, regarding the size of the frame and the other elements such as labels
+- create one label for each column and check if the width is bigger than the column
+- receive an array with label for each item. i.e. jan: 10, feb:15, mar:18, apr:20...
