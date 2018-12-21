@@ -64,6 +64,11 @@ v0.1 has to have:
     option as the divisions be percentage
 - the char size has to be dynamic, regarding the size of the frame and the other elements such as labels (has to figure out better)
 - OK create one label for each column and check if the width is bigger than the column (using vw)
-- receive an array with label for each item. i.e. jan: 10, feb:15, mar:18, apr:20...
+- OK user saying the biggest value (apply it to absolute and percent)
+- OK receive an array with label for each item. i.e. jan: 10, feb:15, mar:18, apr:20...
 - what if the numbers are bigger than 3 digts?
-- left position has to be adjustable (dynamic) (it can be done in the v.02 version)
+- frame left position has to be adjustable (dynamic) (it can be done in the v.02 version)
+-- chartlabel and bellow x (actually frame) may have 10% and frame will have 80% always (it's dynamic)
+- have to understand better the fontSize properties to adjust the label in a good manner
+- enable barchart label font (font family, size, bold, italic)
+- barchart label and xGeneralLabel have to be dynamic if frame + barchartLabel + xGeneralLabel bigger than 100% bigFrame

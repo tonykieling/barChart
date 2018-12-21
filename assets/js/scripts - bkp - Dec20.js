@@ -1,52 +1,11 @@
 $(function(){
   "use strict";
 
-  /*
-  **********************************************************
-  FUNCTION TO ARRANGE MONTH'S LABELS ACCORDING USER ARGUMENT
-  **********************************************************
-  */
-  function setXLabelMonth(argumM, monthToStart = 0){
-    let nObj = {};
-    let varToReturn = [];
-    const monthN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dec"];
-    let mIndex = 0;
 
-    if (typeof(monthToStart) == "string"){
-      while (monthN[mIndex]){
-        if (monthToStart.toLowerCase() == monthN[mIndex].toLowerCase()){
-          break;
-        }
-        mIndex++;
-        //if the month argument is invalid, the mIndex will be 13, which means 0 index in the modulus index bellow
-      }
-
-    } else if (typeof(monthToStart) == "number"){
-      mIndex = monthToStart;
-    }
-
-    for (let mcount = 0; mcount < argumM; mcount++){
-      nObj = {key: mIndex, value: monthN[(mIndex % monthN.length)]};
-      varToReturn.push(nObj);
-      mIndex++;
-    }
-    return (varToReturn);
-  }
-
-
-
-
-  /*
-  **********************************************************
-  FUNCTION TO GENERATE A BAR CHART *************************
-  **********************************************************
-  */
   function barC(argum, option = "", element = ""){
     if (!element){
       element = "body";
     }
-
-
 
 
     // +++++++++++++++++++++++++++++++++++++++
@@ -65,8 +24,6 @@ $(function(){
     });
 
 
-
-
     // +++++++++++++++++++++++++++++++++++++++++
     // ++++++++++ CHART LABEL ELEMENT ++++++++++
     // +++++++++++++++++++++++++++++++++++++++++
@@ -83,17 +40,8 @@ $(function(){
     });
 
 
-
-
-    // +++++++++++++++++++++++++++++++++++++++
-    // ++++++++++ FRAME ELEMENT ++++++++++++++
-    // +++++++++++++++++++++++++++++++++++++++
     let biggestNumber = Math.max(...argum);;
-    let ceilChart = biggestNumber * 1.02;   //it gives a offset to the frame chart to the biggest column
-    if (option.setMaximunValue){
-      ceilChart = option.setMaximunValue; //change the frame reference to the biggest value if the user say so
-    }
-
+    let ceilChart = biggestNumber * 1.02;
     if (biggestNumber % 5 != 0){
       let count = 1;
       while ((ceilChart % 5) != 0){
@@ -102,6 +50,10 @@ $(function(){
       }
     }
 
+
+    // +++++++++++++++++++++++++++++++++++++++
+    // ++++++++++ FRAME ELEMENT ++++++++++++++
+    // +++++++++++++++++++++++++++++++++++++++
     //frame to the bar chart
     var frame = $("<div></div>");
     $(bigFrame).append(frame);
@@ -118,7 +70,6 @@ $(function(){
       height: frameHeigth,
       backgroundColor: "aquamarine",   //set default and user's option
     });
-
 
 
 
@@ -175,13 +126,11 @@ $(function(){
     });
 
 
-
-
     // +++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++ CHART DIVISIONS ELEMENT ++++++++++
     // +++++++++++++++++++++++++++++++++++++++++++++
     //draw the Y axis divisions
-    let numberOfDivisions = 4;    //  default number of divisions
+    let numberOfDivisions = 4;    //  number of divisions default
     if (option.numberOfDivisionsYAxis){
       numberOfDivisions = option.numberOfDivisionsYAxis; //change default if user says
     }
@@ -191,7 +140,7 @@ $(function(){
 
 
     //the values below are related to ABSOLUTE mode.
-    let multTextLabelDivision = Math.ceil(ceilChart / numberOfDivisions); // variable to hold the number to be add in each for loop for the divisionlabel
+    let multTextLabelDivision = parseInt(ceilChart / numberOfDivisions); // variable to hold the number to be add in each for loop for the divisionlabel
     let textLabelDivision = multTextLabelDivision;
 
     //check whether the user wants RELATIVE mode and apply it if so
@@ -253,7 +202,7 @@ $(function(){
 
     let columnsNumber = argum.length;
 
-    //comonthToStart = 0on variables
+    //common variables
 
     // diff will be used to calculate the space btw the columns
     let diff = 0;
@@ -270,8 +219,9 @@ $(function(){
     let columns = [];
     let labelAxisColumn = [];
     let labelColumns = [];
+    let changeFontOn = false;
+    let checkFontSize = true;
     let labelColumnFontSize = option.setColumnsFontSize;
-    let eachXLabel = argum; //move THIS LINE to before the for loop
 
 
     for (let i in argum){
@@ -295,87 +245,80 @@ $(function(){
       });
       $(frame).append(columns[i]);
 
+      //label within each column
+      labelColumns[i] = $("<div></div>");
+      $(columns[i]).append(labelColumns[i]);
+      $(labelColumns[i]).html(argum[i]);
+      $(labelColumns[i]).css({
+        position: "absolute",
+        fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
+        fontSize: labelColumnFontSize,
+        fontSize: "1.5vw",
+        zIndex: 11,  //same columns[i]'s zIndex
+      });
 
       // check whether fontSize is valid
       // if it isn't, sets 16 as default
-      // if ((option.setColumnsFontSize == "") || (option.setColumnsFontSize == 0)){
-      //   $(labelColumns[i]).css("fontSize", 16);
-      // }
-
-      if (option.setColumnWithLabel == true){
-        //label within each column
-        labelColumns[i] = $("<div></div>");
-        $(columns[i]).append(labelColumns[i]);
-        $(labelColumns[i]).html(argum[i]);
-        $(labelColumns[i]).css({
-          position: "absolute",
-          fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
-          width: "100%",
-          fontSize: "1.3vw",
-          zIndex: 11,  //same columns[i]'s zIndex
-          textAlign: "center",
-        });
+      if ((option.setColumnsFontSize == "") || (option.setColumnsFontSize == 0)){
+        $(labelColumns[i]).css("fontSize", 16);
+      }
 
 
-        // vertical position: top, bottom or middle
-        if (typeof(option.setLabelColumnPos) == "string"){
-          if (option.setLabelColumnPos.toLowerCase() == "top"){
-            $(labelColumns[i]).css("top", 0);
-          } else if (option.setLabelColumnPos.toLowerCase() == "bottom"){
-            $(labelColumns[i]).css("bottom", 0);
+      $(labelColumns[i]).css("left",
+                          (((parseInt($(columns[i]).css("width"))) - (parseInt($(labelColumns[i]).css("width")))) / 2));
 
-          } else if (option.setLabelColumnPos.toLowerCase() == "middle"){
-            $(labelColumns[i]).css("bottom",
-                              (((parseInt($(columns[i]).css("height"))) - (parseInt($(labelColumns[i]).css("height")))) / 2));
-          } else {
-            console.log("columnposition: gonna be top (default)");
-            $(labelColumns[i]).css("top", 0);
-          }
-        } else{
-          console.log("Please the Column Label Position parameter (setLabelColumnPos) has to be a string 'TOP', 'BOTTOM' or 'MIDDLE'.");
+
+      // vertical position: top, bottom or middle
+      if (typeof(option.setLabelColumnPos) == "string"){
+        if (option.setLabelColumnPos.toLowerCase() == "top"){
+          $(labelColumns[i]).css("top", 0);
+        } else if (option.setLabelColumnPos.toLowerCase() == "bottom"){
+          $(labelColumns[i]).css("bottom", 0);
+
+        } else if (option.setLabelColumnPos.toLowerCase() == "middle"){
+          $(labelColumns[i]).css("bottom",
+                            (((parseInt($(columns[i]).css("height"))) - (parseInt($(labelColumns[i]).css("height")))) / 2));
+        } else {
+          console.log("columnposition: gonna be top (default)");
           $(labelColumns[i]).css("top", 0);
         }
+      } else{
+        console.log("Please the Column Label Position parameter (setLabelColumnPos) has to be a string 'TOP', 'BOTTOM' or 'MIDDLE'.");
+        $(labelColumns[i]).css("top", 0);
       }
+
 
       //insert a label for each column here
-      // console.log(typeof(option.setXLabel));
-      if (i == 0) { // it will set the label , or its variable, only in the very first time
-        if (typeof(option.setXLabel) == "string"){
-          if (((option.setXLabel.toLowerCase()) == "month") ||
-             ((option.setXLabel.toLowerCase()) == "number") ||
-             ((option.setXLabel.toLowerCase()) == "on")) {
-            eachXLabel = setXLabelMonth(argum.length, option.setXLabelStarts);
-          }
-        }
-      }
-
       labelAxisColumn[i] = $("<div></div>");
-      $(columns[i]).append(labelAxisColumn[i]);
-      $(labelAxisColumn[i]).html(eachXLabel[i].value);
+      $(frame).append(labelAxisColumn[i]);
+      $(labelAxisColumn[i]).html(argum[i]);
       $(labelAxisColumn[i]).css({
         position: "absolute",
         bottom: -20,
-        width: "100%",
-        fontSize: "1.4vw",
-        textAlign:"center",
+        fontSize: labelColumnFontSize,
+        fontSize: "1.5vw",
       });
+
+      $((labelAxisColumn[i]).css("left",
+                  vleft +
+                  ((columnWidth - (parseFloat($(labelAxisColumn[i]).css("width")))) / 2)));
     }
 
 
   //set the X label, regarding the argument received from options
-  let xGeneralLabel = $("<div></div>");
-  $(frame).append(xGeneralLabel);
-  $(xGeneralLabel).html(option.xLabelText);
-  $(xGeneralLabel).css({
+  let xLabel = $("<div></div>");
+  $(frame).append(xLabel);
+  $(xLabel).html(option.xLabelText);
+  $(xLabel).css({
     position: "absolute",
     });
-  $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 3.5 )));
-  $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
+  $((xLabel).css("bottom", (-1) * (parseFloat($(labelAxisColumn[0]).css("height")) * 3 )));
+  $((xLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xLabel).css("width")))) / 2)));
 
 
   /* just in case to calculate vertical distances btw element
-  let xlabelh   = (parseInt($(xGeneralLabel).css("height")));
-  let xlabelpos = (parseInt($(xGeneralLabel).offset().top));
+  let xlabelh   = (parseInt($(xLabel).css("height")));
+  let xlabelpos = (parseInt($(xLabel).offset().top));
   let frametop  = (parseInt($(frame).offset().top));
   console.log("xlabelH: " + xlabelh + "\nxlabelPos: " + xlabelpos + "\nframetop: " + frametop);
   let distancek = ((xlabelh + xlabelpos) - frametop);
@@ -388,19 +331,13 @@ $(function(){
 
   }
 
-// barC([100, 201, 307, 600, 799, 878, 130, 700, 588, 80, 110, 50, 60, 70],
-// barC([100, 201, 307, 600, 799, 878, 130, 700, 588],
-  barC([100, 201, 307, 600, 799, 70],
-   {frameHeigth: 500, frameWidth: 700,
-    setXLabel: "month", setXLabelStarts: "nov",
-    setMaximunValue: 0,
-     xLabelText: "Monthly $ spend", chartLabelText: "This is the bar chart name", chartLabelColor: "green",
-     setColumnsFont: 0, setColumnWithLabel: true, setLabelColumnPos: "middle", /*top, bottom, middle */
-     numberOfDivisionsYAxis: 5, typeOfDivision: "percent", setDivisionsOverColumns: 0},
+barC([1340, 201, 307, 600, 799, 878, 130, 700, 588, 80, 110],
+   {frameHeigth: 500, frameWidth: 900,
+    setMaximunValue: 1500,
+     xLabelText: "Monthly $ spend", yLabelText: "IM Y", chartLabelText: "This is the bar chart name", chartLabelColor: "green",
+     setColumnsFont: 0, setColumnsFontSize: "10", setLabelColumnPos: "top", /*top, bottom, middle */
+     numberOfDivisionsYAxis: 10, typeOfDivision: "absolute", setDivisionsOverColumns: 0},
    "#barChartPlace");
-
-
-  //  barC({["jan", 100], ["feb", 200], ["mar", 150], ["apr", 230]});
 
 // barC({"month": "jan", {"north":10, "south":20}},
 //       {"montn": "feb", {"north":20, "south": 30}});
