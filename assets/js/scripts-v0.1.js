@@ -1,7 +1,6 @@
 $(function(){
   "use strict";
 
-
   function barC(argum, option = "", element = ""){
     if (!element){
       element = "body";
@@ -37,11 +36,13 @@ $(function(){
       textAlign: "center",
       top: 0,
       color: option.chartLabelColor,
+      // backgroundColor: "yellow",
     });
 
 
     let biggestNumber = Math.max(...argum);;
     let ceilChart = biggestNumber * 1.02;
+    // console.log("biggestNumber: " + biggestNumber + " --- ceilchart: " + ceilChart);
     if (biggestNumber % 5 != 0){
       let count = 1;
       while ((ceilChart % 5) != 0){
@@ -58,19 +59,28 @@ $(function(){
     var frame = $("<div></div>");
     $(bigFrame).append(frame);
 
-    var frameHeigth = option.frameHeigth * 0.75;    //old way
+
+      //first starting the draw with the barFrame as the size of the big frame.
+      // At the end readjust the size Length and  Width regarding all elements which affects the chart draw's size
+    // var frameHeigth = option.frameHeigth - ((parseInt($(chartLabel).css("height"))) + (parseInt($(xLabel).css("height")))) - 50;
+    var frameHeigth = option.frameHeigth * 0.7;
+    // var frameHeigth = option.frameHeigth - (parseInt($(chartLabel.css(height))));
+    // console.log("frameh: " + (parseInt($(chartLabel).css("height"))) + " " + (parseInt($(xLabel).css("height"))));
+    // console.log(frameHeigth);
     var frameWidth = option.frameWidth * 0.7;
 
 
     $(frame).css({
       position: "absolute",
       left: 80,    //   TODO: first draw the frame and after position that
-      top: (parseInt($(chartLabel).css("height"))) + 30,  //distance related to the chartlabel
+      top: (parseInt($(chartLabel).css("height"))) + 15,
       width: frameWidth,
       height: frameHeigth,
       backgroundColor: "aquamarine",   //set default and user's option
     });
 
+    //how to catch an element value via jquery and convert it to number
+    //   ANSWER: (parseInt($(chartLabel).css("height"))) * 10;
 
 
     // +++++++++++++++++++++++++++++++++++++++
@@ -163,6 +173,7 @@ $(function(){
         position: "absolute",
         left: 0,
         bottom: topDivisionPos,
+        // top: topDivision,
         zIndex: 10,
         borderTop: "dotted grey 1px",
         });
@@ -219,9 +230,6 @@ $(function(){
     let columns = [];
     let labelAxisColumn = [];
     let labelColumns = [];
-    let changeFontOn = false;
-    let checkFontSize = true;
-    let labelColumnFontSize = option.setColumnsFontSize;
 
 
     for (let i in argum){
@@ -252,8 +260,7 @@ $(function(){
       $(labelColumns[i]).css({
         position: "absolute",
         fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
-        fontSize: labelColumnFontSize,
-        fontSize: "1.5vw",
+        fontSize: option.setColumnsFontSize,
         zIndex: 11,  //same columns[i]'s zIndex
       });
 
@@ -263,10 +270,17 @@ $(function(){
         $(labelColumns[i]).css("fontSize", 16);
       }
 
-
-      $(labelColumns[i]).css("left",
+      // arrange the size of the labelColumnFont according the width's column
+      if ((parseInt($(columns[i]).css("width"))) < (parseInt($(labelColumns[i]).css("width")))){
+        let newFontSize = (parseInt($(labelColumns[i]).css("fontSize")));
+        while((parseInt($(columns[i]).css("width"))) < (parseInt($(labelColumns[i]).css("width")))){
+          newFontSize--;
+          $(labelColumns[i]).css("fontSize", newFontSize);
+        }
+      } else { // labelColumn positioned in the center
+        $(labelColumns[i]).css("left",
                           (((parseInt($(columns[i]).css("width"))) - (parseInt($(labelColumns[i]).css("width")))) / 2));
-
+      }
 
       // vertical position: top, bottom or middle
       if (typeof(option.setLabelColumnPos) == "string"){
@@ -295,15 +309,15 @@ $(function(){
       $(labelAxisColumn[i]).css({
         position: "absolute",
         bottom: -20,
-        fontSize: labelColumnFontSize,
-        fontSize: "1.5vw",
       });
 
-      $((labelAxisColumn[i]).css("left",
-                  vleft +
-                  ((columnWidth - (parseFloat($(labelAxisColumn[i]).css("width")))) / 2)));
-    }
+      let lw = (parseFloat($(labelAxisColumn[i]).css("width")));
+      let cw = columnWidth;
+      let k1 = ((cw - lw) / 2);
+      let plabel = vleft + k1;
+      $((labelAxisColumn[i]).css("left", plabel));
 
+    }
 
   //set the X label, regarding the argument received from options
   let xLabel = $("<div></div>");
@@ -312,11 +326,10 @@ $(function(){
   $(xLabel).css({
     position: "absolute",
     });
-  $((xLabel).css("bottom", (-1) * (parseFloat($(labelAxisColumn[0]).css("height")) * 3 )));
+  $((xLabel).css("bottom", (-1) * (parseFloat($(labelAxisColumn[0]).css("height")) * 2.5 )));
   $((xLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xLabel).css("width")))) / 2)));
 
 
-  /* just in case to calculate vertical distances btw element
   let xlabelh   = (parseInt($(xLabel).css("height")));
   let xlabelpos = (parseInt($(xLabel).offset().top));
   let frametop  = (parseInt($(frame).offset().top));
@@ -324,17 +337,30 @@ $(function(){
   let distancek = ((xlabelh + xlabelpos) - frametop);
   console.log("distance is: " + distancek);
 
-  // $(frame).css("height", distancek);
+  $(frame).css("height", distancek);
   // var frameHeigth = distancek;
   // var frameWidth = option.frameWidth * 0.7;
-  */
+
+
+  // let k1 = $("<div></div>");
+  // $(k1).html("K1");
+  // $(k1).css({
+  //   position: "relative",
+  //   top: parseInt($(frame).css("top")),
+  //   backgroundColor: "red",
+  //   zIndex: 30,
+  // })
+  // let k2 = $("<div></div>");
+  // $(k2).html("K2");
+  // $(selector).offset({top:value,left:value})
+
 
   }
 
-barC([1340, 201, 307, 600, 799, 878, 130, 700, 588, 80, 110],
-   {frameHeigth: 500, frameWidth: 900,
+barC([134, 201, 307, 600, 799, 878, 900, 700, 588],
+   {frameHeigth: 500, frameWidth: 700,
      xLabelText: "Monthly $ spend", yLabelText: "IM Y", chartLabelText: "This is the bar chart name", chartLabelColor: "green",
-     setColumnsFont: 0, setColumnsFontSize: "10", setLabelColumnPos: "top", /*top, bottom, middle */
+     setColumnsFont: 0, setColumnsFontSize: "", setLabelColumnPos: "top", /*top, bottom, middle */
      numberOfDivisionsYAxis: 10, typeOfDivision: "Percent", setDivisionsOverColumns: 0},
    "#barChartPlace");
 

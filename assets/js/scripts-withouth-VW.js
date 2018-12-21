@@ -1,6 +1,44 @@
 $(function(){
   "use strict";
 
+/*
+Function to check fontSizes and width's columns
+*/
+  function defineFontSize(bignumber, actualW, desiredW, sugestFont = 18) {
+    // console.log ("bign: " + bignumber + " + actualW: " + actualW + " + desiredW: " + desiredW + " + suggestedFont: " + sugestFont);
+    let nFontSize = sugestFont--;
+    let tempElement = $("<div></div>");
+    $(tempElement).html(bignumber);
+    $(tempElement).css({
+      fontSize: nFontSize,
+      // width: actualW,
+    });
+
+    let mcount1 = 0;
+    console.log("wid: " + $(tempElement).width());
+    while (($(tempElement).width()) > desiredW){
+      console.log((($(tempElement).width()) + " is bigger than " + desiredW));
+      nFontSize--;
+      $(tempElement).css("fontSize", nFontSize);
+      console.log("fontsize::: " + ($(tempElement).css("fontSize")) + " and width: " + $(tempElement).width());
+
+
+      mcount1++;
+      if (mcount1 > 10){
+        console.log("wiDTH: " + parseInt($(tempElement).width()));
+        console.log("BREAKKKKKKKKKKKKKKKKKKKKKK");
+        break;
+      }
+    }
+
+    console.log("newFontSize: " + nFontSize);
+    nFontSize = nFontSize;
+    return(nFontSize);
+  }
+
+
+
+
 
   function barC(argum, option = "", element = ""){
     if (!element){
@@ -264,6 +302,32 @@ $(function(){
       }
 
 
+      // // arrange the size of the labelColumnFont according the width's column
+      // if (((($(columns[i]).width())) < (parseInt($(labelColumns[i]).css("width"))) || changeFontOn) && checkFontSize){
+      //   console.log("INSIDE and i: " + i);
+
+      //   console.log("desiredW: " + (parseInt($(columns[i]).css("width"))) + " and FontSize: " + (parseInt(option.setColumnsFontSize)));
+      //   labelColumnFontSize = defineFontSize(biggestNumber,
+      //                                 (parseInt($(labelColumns[i]).css("width"))),
+      //                                 (parseInt($(columns[i]).css("width"))),
+      //                                 (parseInt(option.setColumnsFontSize)));
+
+      //   console.log("newsizEE: " + labelColumnFontSize + " * labelcolSize: " + ($(labelColumns[i]).css("fontSize")));
+      //     $(labelColumns[i]).css("fontSize", labelColumnFontSize);
+      //     for (let changeFont in labelColumns){
+      //       console.log(changeFont);
+      //       $(labelColumns[changeFont]).css("fontSize", labelColumnFontSize);
+      //       $(labelColumns[changeFont]).css("left",
+      //                         (((parseInt($(columns[changeFont]).css("width"))) - (parseInt($(labelColumns[changeFont]).css("width")))) / 2));
+
+      //       $(labelAxisColumn[changeFont].css("fontSize", labelColumnFontSize));
+
+      //     }
+      //   changeFontOn = true;
+      //   checkFontSize = false;
+      // }
+
+      // labelColumn positioned in the center
       $(labelColumns[i]).css("left",
                           (((parseInt($(columns[i]).css("width"))) - (parseInt($(labelColumns[i]).css("width")))) / 2));
 
@@ -295,13 +359,54 @@ $(function(){
       $(labelAxisColumn[i]).css({
         position: "absolute",
         bottom: -20,
-        fontSize: labelColumnFontSize,
-        fontSize: "1.5vw",
+        // fontSize: labelColumnFontSize,
+        fontSize: "2vw",
       });
 
       $((labelAxisColumn[i]).css("left",
                   vleft +
                   ((columnWidth - (parseFloat($(labelAxisColumn[i]).css("width")))) / 2)));
+
+
+
+
+
+
+
+
+      // check and rearrange the labels' size and labels' width
+      // arrange the size of the labelColumnFont according the width's column
+      // if (((($(columns[i]).width())) < (parseInt($(labelColumns[i]).css("width"))) || changeFontOn) && checkFontSize){
+
+
+
+      //   // 4vw
+
+      //   console.log("INSIDE and i: " + i);
+
+      //   console.log("desiredW: " + (parseInt($(columns[i]).css("width"))) + " and FontSize: " + (parseInt(option.setColumnsFontSize)));
+      //   labelColumnFontSize = defineFontSize(biggestNumber,
+      //                                 (parseInt($(labelColumns[i]).css("width"))),
+      //                                 (parseInt($(columns[i]).css("width"))),
+      //                                 (parseInt(option.setColumnsFontSize)));
+
+      //   console.log("newsizEE: " + labelColumnFontSize + " * labelcolSize: " + ($(labelColumns[i]).css("fontSize")));
+      //     $(labelColumns[i]).css("fontSize", labelColumnFontSize);
+      //     for (let changeFont in labelColumns){
+      //       console.log(changeFont);
+      //       $(labelColumns[changeFont]).css("fontSize", labelColumnFontSize);
+      //       $(labelColumns[changeFont]).css("left",
+      //                         (((parseInt($(columns[changeFont]).css("width"))) - (parseInt($(labelColumns[changeFont]).css("width")))) / 2));
+
+      //       $(labelAxisColumn[changeFont].css("fontSize", labelColumnFontSize));
+
+      //     }
+      //   changeFontOn = true;
+      //   checkFontSize = false;
+      // }
+
+
+
     }
 
 
@@ -312,7 +417,7 @@ $(function(){
   $(xLabel).css({
     position: "absolute",
     });
-  $((xLabel).css("bottom", (-1) * (parseFloat($(labelAxisColumn[0]).css("height")) * 3 )));
+  $((xLabel).css("bottom", (-1) * (parseFloat($(labelAxisColumn[0]).css("height")) * 2.5 )));
   $((xLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xLabel).css("width")))) / 2)));
 
 
@@ -332,9 +437,9 @@ $(function(){
   }
 
 barC([1340, 201, 307, 600, 799, 878, 130, 700, 588, 80, 110],
-   {frameHeigth: 500, frameWidth: 900,
+   {frameHeigth: 500, frameWidth: 700,
      xLabelText: "Monthly $ spend", yLabelText: "IM Y", chartLabelText: "This is the bar chart name", chartLabelColor: "green",
-     setColumnsFont: 0, setColumnsFontSize: "10", setLabelColumnPos: "top", /*top, bottom, middle */
+     setColumnsFont: 0, setColumnsFontSize: "30", setLabelColumnPos: "top", /*top, bottom, middle */
      numberOfDivisionsYAxis: 10, typeOfDivision: "Percent", setDivisionsOverColumns: 0},
    "#barChartPlace");
 
