@@ -70,5 +70,5 @@ v0.1 has to have:
 - frame left position has to be adjustable (dynamic) (it can be done in the v.02 version)
 -- chartlabel and bellow x (actually frame) may have 10% and frame will have 80% always (it's dynamic)
 - have to understand better the fontSize properties to adjust the label in a good manner
-- enable barchart label font (font family, size, bold, italic)
-- barchart label and xGeneralLabel have to be dynamic if frame + barchartLabel + xGeneralLabel bigger than 100% bigFrame
+-+- enable barchart label font (font family, size, bold, italic)
+-+- barchart label and xGeneralLabel have to be dynamic if frame + barchartLabel + xGeneralLabel bigger than 100% bigFrame
