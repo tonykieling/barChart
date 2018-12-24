@@ -72,3 +72,4 @@ v0.1 has to have:
 - have to understand better the fontSize properties to adjust the label in a good manner
 -+- enable barchart label font (font family, size, bold, italic)
 -+- barchart label and xGeneralLabel have to be dynamic if frame + barchartLabel + xGeneralLabel bigger than 100% bigFrame
+-- need apply setFonSize for other labels

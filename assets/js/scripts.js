@@ -1,6 +1,93 @@
 $(function(){
   "use strict";
 
+// it checks if the fontSize passed by the user is fittable in the current element, which can be chartLabel or Xlabel.
+// it returns fontSize fittable for the attribute in case, height or width.
+// the maximum fontSize possible will be regarding the definition of the host element width or height
+function setFontSize(contentF, hostElement, attributeF, maxF, fontSizeF, userFontSize, operatorF, fontFamilyF = "Arial"){
+  // if (contentF != "100%"){
+  //   return 15;
+  // }
+
+  maxF = parseInt(maxF);
+
+  // console.log(
+  //   "contentF: " + contentF +
+  //   "\nhostElement: " + hostElement +
+  //    "\nattributeF: " + attributeF +
+  //    "\nmaxF: "  + maxF +
+  //     "\nfontSizeF: " + fontSizeF +
+  //     "\nuserFontSize: " + userFontSize +
+  //     "\noperatorF: " + operatorF +
+  //      "\nfontFamilyF: " + fontFamilyF
+  // );
+
+  // const tempFontSize = (parseInt(fontSizeF));
+
+  let returnVar = 0;
+
+  let elementF = $("<div></div>");
+  $(hostElement).append(elementF);
+  $(elementF).html(contentF);
+  $(elementF).css({
+    position: "absolute",
+    fontFamily: fontFamilyF,
+    fontSize: userFontSize,
+    border: "solid purple"
+  });
+
+  // $(elementF).css("fontSize", userFontSize);
+
+  if (parseInt($(elementF).css(attributeF)) < maxF){
+    $(elementF).remove();
+    console.log("fontSize is bigger than 8 and it's okay");
+    return(userFontSize);
+  }
+
+  let sbF = "";
+  if (operatorF == "+"){
+    sbF = "<=";
+  } else if (operatorF == "-"){
+    sbF = ">=";
+    // console.log("eval:: " + eval(5 + sbF + 4));
+  }
+
+  // increase or decrease the size of the font according the size of the element passed by the user (height or width)
+  console.log("attrib::: " + parseInt($(elementF).css(attributeF)));
+                        // if (eval((parseInt($(elementF).css(attributeF))) + sbF + maxF)){
+                        //   console.log(((parseInt($(elementF).css(attributeF))) + " " + sbF + " " + maxF));
+                        //   console.log("leaving!!!!");
+                        //   // $(elementF).remove();
+                        //   return fontSizeF;
+                        // }
+  let mcountF = 1;
+  console.log("-------------------");
+  console.log(((parseInt($(elementF).css(attributeF))) + " " + sbF + " " + maxF));
+  let countFontSize = 0;
+  while (eval((parseInt($(elementF).css(attributeF))) + sbF + maxF)){
+    // console.log("inside while " + mcountF);
+    // console.log(countFontSize + " " + operatorF);
+    countFontSize = eval(countFontSize + operatorF + 1);
+    returnVar = userFontSize + countFontSize;
+    // console.log("returnVar: " + returnVar);
+    $(elementF).css({
+      fontSize: returnVar
+      });
+
+    if (mcountF > 30){
+      console.log("Break!");
+      $(elementF).remove();
+      return 8;
+    }
+    mcountF++;
+  }
+  $(elementF).remove();
+  console.log("returnVar: " + (returnVar));
+  return returnVar;
+}
+
+
+
   /*
   **********************************************************
   FUNCTION TO ARRANGE MONTH'S LABELS ACCORDING USER ARGUMENT
@@ -88,43 +175,32 @@ $(function(){
     });
 
 
+    if (!option.chartLabelText){  // if no chartLabel defined by the user, the room for chartLabel has to be small (3% of the whole frame)
+      $(chartLabel).css("height", (option.frameHeight * 0.03));
+    } else {
+      if ((parseInt(option.chartLabelFontSize < 8)) || (option.chartLabelFontSize == "0")){
+        console.log("chartLabel is valid but no fontSize btw 0 - 7");
+        $(chartLabel).css("fontSize", 8);
 
+      } else if (parseInt(option.chartLabelFontSize) > 8){ // it will call the function setFontSize only to check if the size is fittable with the chartlabel room
+        console.log("user define sizeFont as: " + option.chartLabelFontSize + " and the function will check if it is fittable");
+        // $(chartLabel).css("fontSize", 20);
+        // console.log("fontsize > 8 and now = 20");
+        $(chartLabel).css("fontSize",
+                  (setFontSize(option.chartLabelText,               // call setFontSize with the arguments: chartLabelText
+                               bigFrame,                            // bigFrame is the current HTML element parent
+                               "height",                            // apply the size related to the height
+                               (option.frameHeight * 0.1),          // maximum size of the current element is supposed to support
+                               parseInt($(chartLabel).css("fontSize")),  // start the fontSize in 8
+                               parseInt(option.chartLabelFontSize), //user's fontSize
+                               "-",                                 // the fontSize will decrease, just in case user'a FontSize too big
+                               option.chartLabelFontFamily) ));     // fontFamily to be used
+        console.log("new SizeF: " + $(chartLabel).css("fontSize"));
 
-
-
-
-
-
-
-
-
-    const tempFontSize = (parseInt($(chartLabel).css("fontSize")));
-    const heightMax = option.frameHeight * 0.1;
-
-
-    let countFontSize = 1;
-    // build a function to calculate the size of font or width or height for any call (5 text elements), in order to be better fittable
-    // if (par = "w"){ //deal with height
-
-    // } else (par = "h"){ //deal with width
-
-    // }
-
-    while ((parseInt($(chartLabel).css("height"))) < heightMax){
-      $(chartLabel).css("fontSize", (tempFontSize + countFontSize));
-      countFontSize++;
-
-      if (countFontSize > 50){    // just in case to avoid infinite loops
-        break;
+      // } else if ((option.chartLabelFontSize == "") ||
+      //           (!option.chartLabelFontSize)){  //if no fontSize defined by the user, the system will do it with the maximum possible
       }
     }
-
-    if ((parseInt(option.chartLabelFontSize)) < (parseInt($(chartLabel).css("fontSize")))){
-      if ((parseInt(option.chartLabelFontSize)) > 8){ //minumum size
-        $(chartLabel).css("fontSize", parseInt(option.chartLabelFontSize));
-      }
-    }
-
 
 
     // +++++++++++++++++++++++++++++++++++++++
@@ -214,7 +290,8 @@ $(function(){
     });
 
 
-    //**************************************************************have to adjust the arrow's details for small and big frames */
+    //**************************************************************
+    // it's to adjust the arrow's details for small and big frames */
     if (((option.frameHeight) <= 400) || ((option.frameWidth) <= 600)){
       $(lineX).css("borderBottom", "solid black 1.5px");
       $(arrowX).css("borderWidth", "0 1.5px 1.5px 0");
@@ -229,6 +306,22 @@ $(function(){
       $(arrowY).css("borderWidth", "0 1px 1px 0");
     }
 
+
+
+
+    // these variables are related to the columns but were defined here in order tohave the size width btw columns labels and chartdivision labels
+    let columnsNumber = argum.length;
+
+    // diff will be used to calculate the space btw the columns
+    let diff = 0;
+    if (columnsNumber % 2 == 0){ // for even number of columns
+      diff = 0.5
+    } else {  // for odd number of columns
+      diff = 1;
+    }
+
+    var columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
+    // console.log("columwidth " + columnWidth + "\nframewidth " + frameWidth + "\ncolumnsNumber "+ columnsNumber + "\ndiff "+ diff)
 
 
     // +++++++++++++++++++++++++++++++++++++++++++++
@@ -260,6 +353,7 @@ $(function(){
 
     let divisions = [];
     let labelDivision = [];
+    let tempLabelDivFontS = 10;
     for (let countDivision = 0; countDivision < numberOfDivisions; countDivision++){
       divisions[countDivision] = $("<div></div>");
       $(frame).append(divisions[countDivision]);
@@ -284,11 +378,28 @@ $(function(){
       // the division label has to have % if it's the case
       if ((option.typeOfDivision).toLowerCase() == "percent"){
         $(labelDivision[countDivision]).html(textLabelDivision + "%");
-      } else{
+        console.log("percentage");
+
+        // if (countDivision == 0){
+        //   console.log("once");
+        //   tempLabelDivFontS = 0;
+        //   tempLabelDivFontS =
+        //   (setFontSize("100%",             // call setFontSize with the arguments: chartLabelText
+        //               bigFrame,                          // bigFrame is the current HTML element parent
+        //               "height",                          // apply the size related to the height
+        //               columnWidth,        // maximum size of the current element is supposed to support
+        //               8,                                 // start the fontSize in 8
+        //               "+",                               // the fontSize will increase
+        //               option.chartLabelFontFamily) );   // fontFamily to be used
+        //               console.log("templafS: " + tempLabelDivFontS);
+
+      } else if (((option.typeOfDivision).toLowerCase()) == "absolute"){
         $(labelDivision[countDivision]).html(textLabelDivision);
+        console.log("abs");
       }
+
       $(labelDivision[countDivision]).css({
-        fontSize: 15,
+        fontSize: tempLabelDivFontS,
         position: "absolute",
         right: frameWidth + 5,
       });
@@ -300,24 +411,32 @@ $(function(){
       topDivisionPos += divisionsHeigth;
       textLabelDivision += multTextLabelDivision;
 
-    }
+
+  }
 
 
 
 
-    let columnsNumber = argum.length;
 
-    //comonthToStart = 0on variables
 
-    // diff will be used to calculate the space btw the columns
-    let diff = 0;
-    if (columnsNumber % 2 == 0){ // for even number of columns
-      diff = 0.5
-    } else {  // for odd number of columns
-      diff = 1;
-    }
 
-    let columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
+
+
+
+
+
+// these variables were defined above in order to have the same width for the columns and the Y axis labels
+    // let columnsNumber = argum.length;
+
+    // // diff will be used to calculate the space btw the columns
+    // let diff = 0;
+    // if (columnsNumber % 2 == 0){ // for even number of columns
+    //   diff = 0.5
+    // } else {  // for odd number of columns
+    //   diff = 1;
+    // }
+
+    // let columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
     let spaceBtwCol = columnWidth / 2;
     let barBottom = 0;
     let vleft = 0;
@@ -480,18 +599,18 @@ $(function(){
     //  chart options
     {
     //bigFrame Features:
-    frameHeight: 500, frameWidth: 700, /* consider color and border features*/
+    frameHeight: 400, frameWidth: 600, /* consider color and border features*/
 
     //chartLabelFeatures:
-    chartLabelText: "ChartLabel Test", chartLabelFontFamily: "Serif", chartLabelFontSize: "60", chartLabelColor: "green",
-     chartLabelBorder: "solid red",
+    chartLabelText: "ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: 50, chartLabelColor: "green",
+     chartLabelBorder: "",
 
     //chart features:
-    setXLabel: "month", setXLabelStarts: "nov",
-      setMaximunValue: 0,
+    setXLabel: "month", setXLabelStarts: "mar",
+      setMaximunValue: 1500,
       xLabelText: "Monthly $ spend",
       setColumnsFont: 0, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
-      numberOfDivisionsYAxis: 5, typeOfDivision: "absolute", setDivisionsOverColumns: 0},
+      numberOfDivisionsYAxis: 4, typeOfDivision: "percent", setDivisionsOverColumns: 0},
 
     // THIRD ARGUMENT
     //  chart position, that is, in what element it's supposed to be placed
