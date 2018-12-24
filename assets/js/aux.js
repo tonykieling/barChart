@@ -1,3 +1,61 @@
+function setDealArray(bArray){
+  console.log("array lenght: " + bArray.length);
+  for (let i in bArray){
+    // console.log(i[0]);
+    console.log(((Number(i)) + 1) + "o object from the array: ");
+    console.log(bArray[i]);
+    // console.log(bArray[i][0]);
+    for (let asd in bArray[i]){
+      console.log(asd);
+      // console.log(bAr ray[i][w]);
+    }
+  }
+  // console.log("\n\n");
+  // console.log(bArray);
+}
+
+
+// first way: only numbers for each item, no label
+// console.log("// first way: only numbers");
+// let k = [10, 30, 47, 33];
+
+// second way: only one number for item and each one with label
+// console.log("// second way: only one number for item and each one with label");
+// let k = [
+//   {"okay": 10},
+//   {"nope": 5},
+//   {"yeah": 15},
+//   {"bad":   3}
+// ];
+
+// third way: multiple numbers for item with label
+console.log("// third way: multiple numbers for item with label");
+let k = [
+  {"numbers": [1, 2, 3]},
+  {"letters": ["a", "b", "c"]},
+  {"mix": ["3e", 7, "88"]}
+];
+
+// forth way: multiple numbers for item whithout label
+// console.log("// forth way: multiple numbers for item whithout label");
+// let k = [
+//   [1, 2, 3],
+//   ["a", "b", "c"],
+//   ["3e", 7, "88"]
+// ];
+
+setDealArray(k);
+
+// backup's structure
+// let k = [
+//   {key: "numbers", value: [1, 2, 3]},
+//   {key: "letters", value: ["a", "b", "c"]},
+//   {key: "mix", value: ["3e", 7, "88"]},
+// ];
+
+
+
+/*
 // returns fontSize fittable for the attribute (height or width) in case
 function setFontSize(contentF, attributeF, maxF, fontSizeF, operatorF, fontFamilyF = "Arial"){
   console.log(
@@ -65,6 +123,8 @@ setFontSize("asd", "width", 40, 50, "+");
 
 
 
+
+
 /*
 function setXLabelMonth(argum, monthToStart = 0){
   console.log(argum + " and " + (monthToStart));
@@ -87,8 +147,14 @@ function setXLabelMonth(argum, monthToStart = 0){
     mIndex = monthToStart = 0;
   }
 
+
   for (let mcount = 0; mcount < argum; mcount++){
-    nObj = {key: mIndex, value: monthN[(mIndex % monthN.length)]};
+    let tempp = [];
+    tempp.push(mcount * 10);
+    tempp.push((mcount + 1) * 10);
+    console.log("tempp: " + tempp);
+    // nObj = {key: mIndex, value: monthN[(mIndex % monthN.length)]};
+    nObj = {key: mIndex, value: tempp};
     varToReturn.push(nObj);
     mIndex++;
   }
@@ -105,5 +171,5 @@ let k1 = setXLabelMonth(mvar.length, "ago");
 for (let p in k1){
   console.log(k1[p].value + " = " + mvar[p]);
 }
-// console.log(k1[0]);
+console.log(k1);
 */
