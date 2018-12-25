@@ -130,12 +130,21 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       left: 50, // check this out later
       width: option.frameWidth,
       height: option.frameHeight,
-      backgroundColor: "white",
+      backgroundColor: option.setBigFrameColor,
+      border: option.setBigFrameBorder
     });
 
     var frameHeight = option.frameHeight * 0.7;    //old way
     var frameWidth = option.frameWidth * 0.7;
 
+    if (!option.setBigFrameColor){
+      console.log("no color");
+      $(bigFrame).css("backgroundColor", "red");
+    }
+    if (!option.setBigFrameBorder){
+      console.log("no border");
+      $(bigFrame).css("border", "none");
+    }
 
     // +++++++++++++++++++++++++++++++++++++++++
     // ++++++++++ CHART LABEL ELEMENT ++++++++++
@@ -616,25 +625,55 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 // barC([100, 201, 307, 600, 799, 878, 130, 700, 588],
   barC(
     // FIRST ARGUMENT
-    //  data to be considered in the chart:
+    // Data  can be:
+    //  - only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
+    //    i.e.: data = [100, 200, 150, 350, 88]
+    //  - only one number by column, with label.
+    //    i.e.: data = [
+    //          {"okay": 10},
+    //          {"nope": 5},
+    //          {"yeah": 15},
+    //          {"bad":   3}]
+    //  - multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
+    //    i.e.: data = [
+    //          [[99, 88, 80, 70], ["North", "South", "East", "West"]],
+    //          [[41, 50, 45, 40], ["North", "South", "East", "West"]],
+    //          [[55, 66, 70, 59], ["North", "South", "East", "West"]],
+    //          [[22, 33, 40, 30], ["North", "South", "East", "West"]],
+
+    //  - multiples numbers by column with label and the identifiers for each number
+    //    i.e.: data = [
+    //          [[99, 88, 80, 70], ["North", "South", "East", "West"], "okay"],
+    //          [[41, 50, 45, 40], ["North", "South", "East", "West"], "bad"],
+    //          [[55, 66, 70, 59], ["North", "South", "East", "West"], "regular"],
+    //          [[22, 33, 40, 30], ["North", "South", "East", "West"], "terrible"],    //  data to be considered in the chart:
     [100, 201, 307, 600, 799, 70],
 
     // SECOND ARGUMENT
     //  chart options
     {
-    //bigFrame Features:
-    frameHeight: 400, frameWidth: 600, /* consider color and border features*/
+      // bigFrame Features:
+      frameHeight: 400, frameWidth: 600, /* consider color and border features*/
+      setBigFrameColor: "white", setBigFrameBorder: "double 2px black",
 
-    //chartLabelFeatures:
-    chartLabelText: "ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: "", chartLabelColor: "green",
-     chartLabelBorder: "",
+      setFrameColor: "green",
 
-    //chart features:
-    setXLabel: "month", setXLabelStarts: "mar",
-      setMaximunValue: 1500,
-      xLabelText: "Monthly $ spend",
+      // chartLabelFeatures:
+      chartLabelText: "ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: "", chartLabelColor: "green",
+          chartLabelBorder: "",
+
+      // X Axis features:
+      setXLabel: "month", setXLabelStarts: "mar",  //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
       setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
-      numberOfDivisionsYAxis: 5, typeOfDivision: "percent", setDivLabelFontSize: "", setDivisionsOverColumns: 0},
+      xLabelText: "Monthly $ spend",
+
+      // Y Axis features
+      setMaximunValue: 1500,
+      numberOfDivisionsYAxis: 5, typeOfDivision: "percent", setDivLabelFontSize: "", setDivisionsOverColumns: 0,
+
+      // legend features - when a columns has more than one value (columns). It has to have a definition for each one
+      // setLegend1Color: "blue", setLegend1Text: "Legend1", /* this is the label, which can be set in the data variable, as well*/
+    },
 
     // THIRD ARGUMENT
     //  chart position, that is, in what element it's supposed to be placed

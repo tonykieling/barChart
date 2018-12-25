@@ -1,58 +1,90 @@
+// function setDealArray(mArray){
+//   let objectKeys = Object.keys(mArray);
+//   console.log("ob: " , objectKeys);
+
+//   console.log('======= Object.entries ==========');
+//   Object.entries(objectKeys).forEach(([key, value]) => {
+//   console.log(`key= ${key} value = ${value}`)
+// })
+// }
 function setDealArray(bArray){
+  let isSimpleArray = true;
+  let isArrayObject = false;
+  let hasLabel = false;
+  console.log(bArray);
   console.log("array lenght: " + bArray.length);
   for (let i in bArray){
-    // console.log(i[0]);
     console.log(((Number(i)) + 1) + "o object from the array: ");
     console.log(bArray[i]);
-    // console.log(bArray[i][0]);
-    for (let asd in bArray[i]){
-      console.log(asd);
-      // console.log(bAr ray[i][w]);
+    for (let mkey in bArray[i]){
+      if (bArray[i][mkey].length > 0){
+        for(let k in bArray[i][mkey]){
+          console.log("\t\"" + (mkey) + "\" is the key and its value is \"" + bArray[i][mkey][k] + "\"");
+          isArrayObject = true;
+          hasLabel = true;
+        }
+      } else {
+        if (isNaN(mkey)){
+          console.log("\t\"" + mkey + "\" value is " + bArray[i][mkey]);
+          hasLabel = true;
+        } else {
+          console.log("\t" + ((Number(mkey)) + 1) + "o value is " + bArray[i][mkey]);
+        }
+      }
+      isSimpleArray = false;
     }
   }
-  // console.log("\n\n");
-  // console.log(bArray);
+  console.log("\n\t\tSimpleArray: " + isSimpleArray);
+  console.log("\t\tArrayObject: " + isArrayObject);
+  console.log("\t\tLabel is: " + hasLabel);
+  // console.log("------------------------------------------------------------------------------\n\n")
 }
 
 
-// first way: only numbers for each item, no label
-// console.log("// first way: only numbers");
-// let k = [10, 30, 47, 33];
+// ********************************
+// I have to find multiple values
+// ********************************************************
+// ********************************************************
 
-// second way: only one number for item and each one with label
+
+
+
+// first way: only numbers for each item, no label
+console.log("// first way: only numbers");
+let k = [10, 30, 47, 33];
+setDealArray(k);
+console.log("------------------------------------------------------------------------------\n\n")
+
+// // second way: only one number for item and each one with label
 // console.log("// second way: only one number for item and each one with label");
-// let k = [
+// k = [
 //   {"okay": 10},
 //   {"nope": 5},
 //   {"yeah": 15},
 //   {"bad":   3}
 // ];
+// setDealArray(k);
+// console.log("------------------------------------------------------------------------------\n\n")
 
 // third way: multiple numbers for item with label
-console.log("// third way: multiple numbers for item with label");
-let k = [
-  {"numbers": [1, 2, 3]},
-  {"letters": ["a", "b", "c"]},
-  {"mix": ["3e", 7, "88"]}
-];
+// console.log("// third way: multiple numbers for item with label");
+// let k = [
+//   [["numbers"], [1, 2, 3, 4], ["North", "South", "West", "East"]],
+//   [["letters"], ["a", "b", "c", "d"], ["North", "South", "West", "East"]],
+//   [["mix"], ["3e", 7, "88"], ["North", "South", "West", "East"]]
+// ];
+// setDealArray(k);
+// console.log("------------------------------------------------------------------------------\n\n")
 
 // forth way: multiple numbers for item whithout label
 // console.log("// forth way: multiple numbers for item whithout label");
-// let k = [
+// k = [
 //   [1, 2, 3],
-//   ["a", "b", "c"],
-//   ["3e", 7, "88"]
+//   [11, 22, 33],
+//   [111, 222, 333]
 // ];
-
-setDealArray(k);
-
-// backup's structure
-// let k = [
-//   {key: "numbers", value: [1, 2, 3]},
-//   {key: "letters", value: ["a", "b", "c"]},
-//   {key: "mix", value: ["3e", 7, "88"]},
-// ];
-
+// setDealArray(k);
+// console.log("------------------------------------------------------------------------------\n\n")
 
 
 /*
@@ -82,10 +114,10 @@ function setFontSize(contentF, attributeF, maxF, fontSizeF, operatorF, fontFamil
   let u = fontSizeF + eval((fontSizeF) + operatorF + operatorF + ";");
   console.log(u);
 }
-setFontSize("asd", "width", 40, 50, "+");
+setFontSizekey", "width", 40, 50, "+");
 /*
   if ((contentF == "") || (contentF == null)){
-    console.log("have to return 0");
+  console.log("have to return 0");
     return 0;
   }
 
