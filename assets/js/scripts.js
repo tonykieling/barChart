@@ -134,17 +134,17 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       border: option.setBigFrameBorder
     });
 
-    var frameHeight = option.frameHeight * 0.7;    //old way
-    var frameWidth = option.frameWidth * 0.7;
 
-    if (!option.setBigFrameColor){
-      console.log("no color");
-      $(bigFrame).css("backgroundColor", "red");
+    if (!option.setBigFrameColor){ // if no background color definition
+      // console.log("no color");
+      $(bigFrame).css("backgroundColor", "white");
     }
-    if (!option.setBigFrameBorder){
-      console.log("no border");
+    if (!option.setBigFrameBorder){ // if no border definition
+      // console.log("no border");
       $(bigFrame).css("border", "none");
     }
+
+
 
     // +++++++++++++++++++++++++++++++++++++++++
     // ++++++++++ CHART LABEL ELEMENT ++++++++++
@@ -158,50 +158,66 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       position: "absolute",
       textAlign: "center",
       width: "100%",
-      top: 0,
       fontFamily: `${option.chartLabelFontFamily}, "Arial"`,
-      fontSize: "8px",   // later, set a maximum limit such as 45 and minimum as 12. Default should be 30.
+      fontSize: option.chartLabelFontSize,
       color: option.chartLabelColor,
       border: option.chartLabelBorder,
     });
 
-
     if (!option.chartLabelText){  // if no chartLabel defined by the user, the room for chartLabel has to be small (3% of the whole frame)
       $(chartLabel).css("height", (option.frameHeight * 0.03));
     } else {
-      if ((parseInt(option.chartLabelFontSize < 8)) || (option.chartLabelFontSize == "0")){
+      if ((Number(option.chartLabelFontSize < 8)) && (Number(option.chartLabelFontSize) > 0)){
         // console.log("chartLabel is valid but no fontSize btw 0 - 7");
         $(chartLabel).css("fontSize", 8);
 
-      } else if (parseInt(option.chartLabelFontSize) > 8){ // it will call the function setFontSize only to check if the size is fittable with the chartlabel room
+      } else if (parseInt(option.chartLabelFontSize) >= 8){ // it will call the function setFontSize only to check if the size is fittable with the chartlabel room
         // console.log("user define sizeFont as: " + option.chartLabelFontSize + " and the function will check if it is fittable");
         $(chartLabel).css("fontSize",
                   (setFontSize(option.chartLabelText,               // call setFontSize with the arguments: chartLabelText
                                bigFrame,                            // bigFrame is the current HTML element parent
                                "height",                            // apply the size related to the height
                                (option.frameHeight * 0.1),          // maximum size of the current element is supposed to support
-                               parseInt(option.chartLabelFontSize), // user's fontSize
+                               Number(option.chartLabelFontSize),   // user's fontSize
                                "-",                                 // the fontSize will decrease, just in case user'a FontSize too big
                                option.chartLabelFontFamily) ));     // fontFamily to be used
 
       // } else if ((option.chartLabelFontSize == "") ||
       //           (!option.chartLabelFontSize)){  //if no fontSize defined by the user, the system will do it with the maximum possible
       } else { // just in case, programmer's definition
+        // console.log("programeer definition of chartlabelfontSize");
         $(chartLabel).css("fontSize",
                   (setFontSize(option.chartLabelText,               // call setFontSize with the arguments: chartLabelText
                                bigFrame,                            // bigFrame is the current HTML element parent
                                "height",                            // apply the size related to the height
                                (option.frameHeight * 0.1),          // maximum size of the current element is supposed to support
-                               50, // user's fontSize
+                               50,                                  // programmer's fontSize
                                "-",                                 // the fontSize will decrease, just in case user'a FontSize too big
                                option.chartLabelFontFamily) ));     // fontFamily to be used
       }
     }
 
 
+
+
     // +++++++++++++++++++++++++++++++++++++++
     // ++++++++++ FRAME ELEMENT ++++++++++++++
     // +++++++++++++++++++++++++++++++++++++++
+    let offSetVar = 0;
+    if (option.chartLabelText){
+      // console.log("chartLabelText = ", option.chartLabelText);
+      offSetVar = 0.1;
+    }
+    if (option.xLabelText){
+      // console.log("xLabelText = ", option.xLabelText);
+      offSetVar += 0.05;
+    }
+
+// console.log("offSetVar = ", parseFloat(offSetVar));
+
+    var frameHeight = ((option.frameHeight * (1 - offSetVar)) - 35);    //old way
+    var frameWidth = option.frameWidth * 0.8;
+
     let biggestNumber = Math.max(...argum);;
     let ceilChart = biggestNumber * 1.02;   //it gives a offset to the frame chart related to the biggest column
     if (option.setMaximunValue){
@@ -226,11 +242,16 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     $(frame).css({
       position: "absolute",
       left: 80,    //   TODO: first draw the frame and after position that
-      top: (parseInt($(chartLabel).css("height"))) + ((parseInt($(chartLabel).css("height"))) * 0.4),  //distance related to the chartlabel
+      // top: (parseInt($(chartLabel).css("height"))) + ((parseInt($(chartLabel).css("height"))) * 0.4),  //distance related to the chartlabel
+      top: (parseInt($(chartLabel).css("height"))) * 1.4,  //distance related to the chartlabel
       width: frameWidth,
       height: frameHeight,
       backgroundColor: "aquamarine",   //set default and user's option
     });
+
+    if (option.setFrameColor){
+      $(frame).css("backgroundColor", option.setFrameColor);
+    }
 
 
 
@@ -425,7 +446,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       }
 
       $(labelDivision[countDivision]).css({
-        // border: "solid grey 1px",
         fontSize: tempLabelDivFontS,
         position: "absolute",
         right: frameWidth + 5,
@@ -594,14 +614,18 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
 
   //set the X label, regarding the argument received from options
-  let xGeneralLabel = $("<div></div>");
-  $(frame).append(xGeneralLabel);
-  $(xGeneralLabel).html(option.xLabelText);
-  $(xGeneralLabel).css({
-    position: "absolute",
-    });
-  $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 3.5 )));
-  $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
+  if (option.xLabelText){
+    // console.log("xLabelText defined as ", option.xLabelText);
+    let xGeneralLabel = $("<div></div>");
+    $(frame).append(xGeneralLabel);
+    $(xGeneralLabel).html(option.xLabelText);
+    $(xGeneralLabel).css({
+      position: "absolute",
+      });
+    $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 3 )));
+    $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
+    // console.log(xGeneralLabel.height() , " ", bigFrame.height()); // maximun height = 5%
+  }
 
 
   /* just in case to calculate vertical distances btw element
@@ -654,9 +678,10 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     {
       // bigFrame Features:
       frameHeight: 400, frameWidth: 600, /* consider color and border features*/
-      setBigFrameColor: "white", setBigFrameBorder: "double 2px black",
+      setBigFrameColor: "#E0E4E3", setBigFrameBorder: "solid 0.5px black",
 
-      setFrameColor: "green",
+      // chartFrame features:
+      setFrameColor: "#97CEC0",
 
       // chartLabelFeatures:
       chartLabelText: "ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: "", chartLabelColor: "green",
