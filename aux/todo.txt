@@ -69,7 +69,12 @@ v0.1 has to have:
 - what if the numbers are bigger than 3 digts?
 - frame left position has to be adjustable (dynamic) (it can be done in the v.02 version)
 -- chartlabel and bellow x (actually frame) may have 10% and frame will have 80% always (it's dynamic)
-- have to understand better the fontSize properties to adjust the label in a good manner
+- OK have to understand better the fontSize properties to adjust the label in a good manner
 -+- enable barchart label font (font family, size, bold, italic)
 -+- barchart label and xGeneralLabel have to be dynamic if frame + barchartLabel + xGeneralLabel bigger than 100% bigFrame
 -- need apply setFonSize for other labels
+    Ylabel is okay, but it's related to the column width. It isn't the best way. Right now, okay
+    OK Add a feature where user can change the fontSize by (him/her)self
+- OK bigFrame sets backgroundColor and border
+- OK frame sets color
+

@@ -1,6 +1,26 @@
 $(function(){
   "use strict";
 
+//*******************************************
+// function to check what type of object is being received.
+// It will be used to deal with the data and build the columns
+// *********************************************
+function checkTypeOfObject(mArray){
+  console.log(mArray);
+  for (let i in mArray){
+    if (mArray[i] instanceof Array){
+      console.log("Array of Arrays");
+      return ("AA");
+    } else if (mArray[i] instanceof Object){   //dont need it
+      console.log("Array of objects");
+      return ("AO");
+    }
+  }
+  console.log("Only one Array");
+  return "OOA";
+}
+
+
 // it checks if the fontSize passed by the user is fittable in the current element, which can be chartLabel or Xlabel.
 // it returns fontSize fittable for the attribute in case, height or width.
 // the maximum fontSize possible will be regarding the definition of the host element width or height
@@ -475,6 +495,8 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
 
 
+let typeOfData = checkTypeOfObject(argum);
+console.log(typeOfData);
 
 
 
@@ -522,11 +544,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       $(frame).append(columns[i]);
 
 
-      // check whether fontSize is valid
-      // if it isn't, sets 16 as default
-      // if ((option.setColumnsFontSize == "") || (option.setColumnsFontSize == 0)){
-      //   $(labelColumns[i]).css("fontSize", 16);
-      // }
 
       if (option.setColumnWithLabel == true){
         //label within each column
@@ -541,7 +558,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           zIndex: 11,  //same columns[i]'s zIndex
           textAlign: "center",
         });
-
 
         // vertical position: top, bottom or middle
         if (typeof(option.setLabelColumnPos) == "string"){
@@ -650,27 +666,29 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   barC(
     // FIRST ARGUMENT
     // Data  can be:
-    //  - only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
+    //  1- only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data = [100, 200, 150, 350, 88]
-    //  - only one number by column, with label.
+    //  2- only one number by column, with label.
     //    i.e.: data = [
     //          {"okay": 10},
     //          {"nope": 5},
     //          {"yeah": 15},
     //          {"bad":   3}]
-    //  - multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
+    //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data = [
     //          [[99, 88, 80, 70], ["North", "South", "East", "West"]],
     //          [[41, 50, 45, 40], ["North", "South", "East", "West"]],
     //          [[55, 66, 70, 59], ["North", "South", "East", "West"]],
     //          [[22, 33, 40, 30], ["North", "South", "East", "West"]],
 
-    //  - multiples numbers by column with label and the identifiers for each number
+    //  4- multiples numbers by column with label and the identifiers for each number
     //    i.e.: data = [
     //          [[99, 88, 80, 70], ["North", "South", "East", "West"], "okay"],
     //          [[41, 50, 45, 40], ["North", "South", "East", "West"], "bad"],
     //          [[55, 66, 70, 59], ["North", "South", "East", "West"], "regular"],
-    //          [[22, 33, 40, 30], ["North", "South", "East", "West"], "terrible"],    //  data to be considered in the chart:
+    //          [[22, 33, 40, 30], ["North", "South", "East", "West"], "terrible"],
+
+    //  data to be considered in the chart:
     [100, 201, 307, 600, 799, 70],
 
     // SECOND ARGUMENT

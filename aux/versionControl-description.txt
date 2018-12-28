@@ -1,0 +1,19 @@
+December 25th, 2018
+v0.1 is done
+ - receives a simple array as data
+ - can set bigframe height and width, color and border
+ - chartLabel can set set font (color, size and type), as well no chartLabel
+ - can set chart frame color and divisions in number of slices and type of slices (absolute or pencent) (Y axis division)
+ - Y Axis can set fontSize
+ - bar columns can set color and whether there is label (over, top, middle and bottom). In this case, the label will be the data received
+ - also, barcolumn can have a offset from the chartLabel, i.e. the chartLabel has a maximum height of 1000 and the biggest data's number is, let's say, 759
+    reason: the user wanna compare his/her data in another context, besides his/her data
+ - X Axis can set month and start from any month that the system will fill the other labels
+ - there is an option to a generic label for X Axis
+
+Next version(s):
+ - adjust either vertical as horizontal barchart frame's position (consider the element after the frame, sucha as the labels)
+ - receive multiple data's values and labels (plus legend and columns with multiple values diff by color)
+ - figure out and format big digits to the X Axis labels or columns' labels
+ - check auto fill for the xlabel besides months
+ - review and organize better the code and function
