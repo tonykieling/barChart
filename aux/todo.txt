@@ -78,3 +78,6 @@ v0.1 has to have:
 - OK bigFrame sets backgroundColor and border
 - OK frame sets color
 
+
+missing numbers for OOA and missing all AO
+AA is ready!

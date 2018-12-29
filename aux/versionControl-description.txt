@@ -16,4 +16,4 @@ Next version(s):
  - receive multiple data's values and labels (plus legend and columns with multiple values diff by color)
  - figure out and format big digits to the X Axis labels or columns' labels
  - check auto fill for the xlabel besides months
- - review and organize better the code and function
+ - review and organize better the code and functions

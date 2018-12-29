@@ -1,0 +1,59 @@
+bigFrame
+    chartLabel
+    frame
+        legendFrame
+            legenfColor
+            LegendText
+        lineY
+            arrowY
+        lineX
+            arrowX
+        divisions
+        labelDivision
+        columns
+            labelColumns
+            labelXColumns
+        (multiColumns AA)
+        xLabel
+
+bigFrame "OKAYOKAYOKAY"
+  width
+  height
+  border ((solid, double, etc), color, (1px, 2px, etc))
+  color
+frame "OKAY"
+ backgroundColor
+ -------------------- missing adjust the size in a better way
+chartLabel "OKAYOKAYOKAY"
+  fontFamily
+  fontSize
+  text
+divisions "OKAYOKAYOKAY"
+  howmany
+  absolute or percent
+  after or before columns
+  fontSize
+columns
+  with label (bottom, middle, top or over)
+   or not
+labelXColumns
+  fontSize
+
+data defines:
+  1- type of column (if single or multicolumns)
+  if OOA
+    no legendFrame
+    maybe xLabel
+    allowed xLabel fontSize
+    allowed labelColumns
+  if AA
+    yes legendFrame
+    maybe xLabel
+    allowed xLabel fontSize
+    allowed labelColumns
+  if AO
+    no legendFrame
+    yes xLabel
+    allowed xLabel fontSize
+    allowed labelColumns
+  2-

@@ -124,27 +124,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
 
 
-  /*
-  **********************************************************
-  FUNCTION TO ARRANGE NUMBER'S LABELS ACCORDING USER ARGUMENT
-  **********************************************************
-  */
- function setXLabelNumber(argumM, numberToStart = 0, inc = 1){
-   console.log(argumM , " -- ", numberToStart, " -- ", inc);
-  let numbObj = {};
-  let arrayToReturn = [];
-  let tempNumb = numberToStart;
-  for (let counting = 0; counting < argumM; counting++){
-    numbObj = {key: counting, value: tempNumb};
-    arrayToReturn.push(numbObj);
-    tempNumb += inc;
-  }
-  return (arrayToReturn);
- }
-
-
-
-
 
   /*
   **********************************************************
@@ -253,12 +232,12 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       // console.log("xLabelText = ", option.xLabelText);
       offSetVarVert += 0.04;
     }
-    // if (((typeOfData == "OOA") || (typeOfData == "AA")) && (option.setXLabel) || (typeOfData == "AO")){
+    if (((typeOfData == "OOA") || (typeOfData == "AA")) && (option.setXLabel) || (typeOfData == "AO")){
       offSetVarVert += 0.04; // adds 4% for the XLabel room if there is Xlabel
-    // }
+    }
 
     let offSetVarHoriz = 0;
-    if (typeOfData == "AA") {   //with legend
+    if ((typeOfData == "AO" || typeOfData == "AA")) {   //with legend
       offSetVarHoriz = 0.3;
       console.log("chart width prepared to receive legend");
     } else {
@@ -311,7 +290,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       position: "absolute",
       left: ((option.frameWidth - frameWidth)/2),
       // top: (parseInt($(chartLabel).css("height"))) + ((parseInt($(chartLabel).css("height"))) * 0.4),  //distance related to the chartlabel
-      top: ((parseInt($(chartLabel).css("height"))) * 1.5),  //distance related to the chartlabel
+      top: (parseInt($(chartLabel).css("height"))) * 1.4,  //distance related to the chartlabel
       width: frameWidth,
       height: frameHeight,
       backgroundColor: "aquamarine",   //set default and user's option
@@ -326,15 +305,15 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       const topLegendColor = (legendColorHeight * 0.75);
       let topLegend = topLegendColor;
 
-      let countSpaces = ((legendColorHeight * (Number(argum[0][1].length))) +
-                       (((Number(argum[0][1].length)) - 1) * (topLegendColor / 2)) + (2 * topLegendColor));
+      let countSpaces = ((legendColorHeight * (Number(argum[0][1].length))) + (((Number(argum[0][1].length)) - 1) * (topLegendColor / 2)) + (2 * topLegendColor));
+      console.log(countSpaces, " countSpaces!!!!");
 
       $(frame).css("left", (frameWidth / 5));
       let legendFrame = $("<div></div>");
       $(frame).append(legendFrame);
       $(legendFrame).css({
         position: "absolute",
-        width: 130,
+        width: 150,
         height: countSpaces,
         border: "solid 0.5px grey",
       });
@@ -361,10 +340,14 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             $(legendText[k]).html(argum[i][1][k]);
             $(legendText[k]).css({
               position: "absolute",
-              left: ((legendColorWidth * 0.75) + (legendColorHeight * 1.5)),
+              left: ((legendColorWidth * 0.75) + (legendColorHeight * 2)),
               top: topLegend,
             });
+            console.log((argum[i][1][k]));
+
             topLegend = (topLegendColor + ((Number(k) + 1) * legendColorHeight) + ((Number(k) + 1) * (topLegendColor / 2)));
+
+
         }
         break;
       }
@@ -573,10 +556,30 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
         bottom: (topDivisionPos - ((parseFloat($(labelDivision[countDivision]).css("height"))) / 2))  //vertical position
       });
 
+
       // change the positioning variable and label one
       topDivisionPos += divisionsHeigth;
       textLabelDivision += multTextLabelDivision;
+
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // these variables were defined above in order to have the same width for the columns and the Y axis labels
@@ -602,6 +605,8 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     let eachXLabel = argum; //move THIS LINE to before the for loop
 
 
+
+
     for (let i in argum){
       // console.log(`${i}o item: ${argum[i]}`);
       if (i == 0){
@@ -624,9 +629,49 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           zIndex: 10,
         });
         $(frame).append(columns[i]);
+      }
 
 
-        //COLUMN LABEL
+
+      if (typeOfData == "AA"){
+        let tempVleft = vleft;
+        for (let subBar in argum[i][0]){
+          multColumns[i] = [];
+          multColumns[i][subBar] = $("<div></div>");
+          $(frame).append(multColumns[i][subBar]);
+          $(multColumns[i][subBar]).css({
+            bottom: barBottom,
+            position: "absolute",
+            width: (columnWidth / (Number(argum[i][0].length))),
+            left: tempVleft,
+            height: (((argum[i][0][subBar]) / ceilChart) * frameHeight),
+            backgroundColor: argum[i][2][subBar]
+          });
+          tempVleft += ($(multColumns[i][subBar]).width());
+        }
+      }
+
+      // else {
+      //   $(columns[i]).css({
+      //     border: "solid red 1px",
+      //     backgroundColor: "white",
+      //     });
+      //     console.log((i + 1), "o object");
+      //   let color = option.barColors[0];
+      //   console.log(color, " and argum[i][0]", argum[i][0]);
+        // for (let subBar in argum[i][0]){
+        //   // console.log(argum[i][0][subBar]);
+        //   multColumns[subBar] = $("<div></div>");
+        //   $(multColumns[subBar]).css({
+        //     backgroundColor: (subBar % color)
+        //   });
+
+        // }
+      // }
+
+      console.log(" != AA");
+      if (typeOfData != "AA"){
+
         if (option.setColumnWithLabel == true){
           //label within each column
           labelColumns[i] = $("<div></div>");
@@ -636,7 +681,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             position: "absolute",
             fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
             width: "100%",
-            fontSize: "1.5vw",
+            fontSize: "1.3vw",
             zIndex: 11,  //same columns[i]'s zIndex
             textAlign: "center",
           });
@@ -664,184 +709,55 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           }
         }
 
+      }
 
-        //insert a Xlabel for each column here
-        if (i == 0) { // it will set the label , or its variable, only in the very first time
-          if (typeof(option.setXLabel) == "string"){
-            if (((option.setXLabel.toLowerCase()) == "month") || ((option.setXLabel.toLowerCase()) == "on")) {
-              eachXLabel = setXLabelMonth(argum.length, option.setXLabelStarts);
-            } else if ((option.setXLabel.toLowerCase()) == "number"){
-              console.log("now is number");
-              if ((typeof(Number(option.setXLabel))) == "number"){
-                console.log("OK, but need to have information from the user");
-              }
+
+      //insert a label for each column here
+      // console.log(typeof(option.setXLabel));
+      if (i == 0) { // it will set the label , or its variable, only in the very first time
+        if (typeof(option.setXLabel) == "string"){
+          if (((option.setXLabel.toLowerCase()) == "month") || ((option.setXLabel.toLowerCase()) == "on")) {
+            eachXLabel = setXLabelMonth(argum.length, option.setXLabelStarts);
+          } else if ((option.setXLabel.toLowerCase()) == "number"){
+            console.log("now is number");
+            if ((typeof(Number(option.setXLabel))) == "number"){
+              console.log("OK, but need to have information from the user");
             }
           }
-        }
-
-        labelAxisColumn[i] = $("<div></div>");
-        $(columns[i]).append(labelAxisColumn[i]);
-        $(labelAxisColumn[i]).html(eachXLabel[i].value);
-        $(labelAxisColumn[i]).css({
-          position: "absolute",
-          bottom: -20,
-          width: "100%",
-          fontSize: "1.4vw",
-          textAlign:"center",
-        });
-        // setup the fontSize of the labelAxisColumn HERE
-
-
-      //set the X label, regarding the argument received from options
-      if (option.xLabelText){
-        let xGeneralLabel = $("<div></div>");
-        $(frame).append(xGeneralLabel);
-        $(xGeneralLabel).html(option.xLabelText);
-        $(xGeneralLabel).css({
-          position: "absolute",
-          });
-        $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 3 )));
-        $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
-      }
-    }
-
-
-
-
-
-
-
-
-
-
-      if (typeOfData == "AA"){
-        let tempVleft = vleft;
-        multColumns[i] = [];
-        for (let subBar in argum[i][0]){
-          // multColumns[i] = [];
-          multColumns[i][subBar] = $("<div></div>");
-          $(frame).append(multColumns[i][subBar]);
-          $(multColumns[i][subBar]).css({
-            bottom: barBottom,
-            position: "absolute",
-            width: (columnWidth / (Number(argum[i][0].length))),
-            left: tempVleft,
-            height: (((argum[i][0][subBar]) / ceilChart) * frameHeight),
-            backgroundColor: argum[i][2][subBar]
-          });
-          tempVleft += ($(multColumns[i][subBar]).width());
-
-
-
-          if (option.setColumnWithLabel == true){
-            //label within each column
-            labelColumns[i] = [];
-              labelColumns[i][subBar] = $("<div></div>");
-              // console.log(labelColumns[i][subBar], ": asd");
-              $(multColumns[i][subBar]).append(labelColumns[i][subBar]);
-              $(labelColumns[i][subBar]).html(argum[i][0][subBar]);
-              $(labelColumns[i][subBar]).css({
-                position: "absolute",
-                fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
-                width: "100%",
-                fontSize: "1.5vw",
-                zIndex: 11,  //same columns[i]'s zIndex
-                textAlign: "center",
-              });
-
-          // vertical position: top, bottom or middle
-          if (typeof(option.setLabelColumnPos) == "string"){
-            if (option.setLabelColumnPos.toLowerCase() == "top"){
-              $(labelColumns[i][subBar]).css("top", 0);
-            } else if (option.setLabelColumnPos.toLowerCase() == "bottom"){
-              $(labelColumns[i][subBar]).css("bottom", 0);
-
-            } else if (option.setLabelColumnPos.toLowerCase() == "middle"){
-              $(labelColumns[i][subBar]).css("bottom",
-                                (((parseInt($(multColumns[i][subBar]).css("height"))) - (parseInt($(labelColumns[i][subBar]).css("height")))) / 2));
-            } else if (option.setLabelColumnPos.toLowerCase() == "over"){
-              $(labelColumns[i][subBar]).css("bottom",
-                                ((parseInt($(multColumns[i][subBar]).css("height")))));
-            } else {
-              console.log("columnposition: gonna be top (default)");
-              $(labelColumns[i][subBar]).css("top", 0);
-            }
-          } else{
-            console.log("Please the Column Label Position parameter (setLabelColumnPos) has to be a string 'TOP', 'BOTTOM' or 'MIDDLE'.");
-            $(labelColumns[i][subBar]).css("top", 0);
           }
         }
+      // }
 
-        // draw the XLabel only in the last number of the array and check if this is auto month
-        if (subBar == ((Number(argum[i][0].length) - 1))){
-          // XLabel
-          console.log(typeof(eachXLabel), " eachxlabel");
-          if (option.setXLabel){
-              // eachXLabel = [];
-              //insert a label for each column here
-              if (i == 0) { // it will set the label , or its variable, only in the very first time
-                if (typeof(option.setXLabel) == "string"){
-                  if (((option.setXLabel.toLowerCase()) == "month") || ((option.setXLabel.toLowerCase()) == "on")) {
-                    eachXLabel = setXLabelMonth(argum[i][0].length, option.setXLabelStarts);
-                    console.log("xlabeltype is ", typeof(eachXLabel));
-                  } else if ((option.setXLabel.toLowerCase()) == "number"){
-                    eachXLabel = setXLabelNumber(argum[i][0].length, option.setXLabelStarts, option.setXLabelInc);
-                    console.log("now is number");
-                    // if ((typeof(Number(option.setXLabel))) == "number"){
-                    //   console.log("OK, but need to have information from the user");
-                    //   eachXLabel = [];
-                    //   let tempXLabel = (option.setXLabelStarts);
-                    //   console.log(typeof(tempXLabel), " is ", tempXLabel);
-                    //   for (let x in argum[i][0]){
-                    //     eachXLabel.push(tempXLabel.toString());
-                    //     console.log(Number(eachXLabel[x]), option.setXLabelInc);
-                    //     tempXLabel = ((Number(eachXLabel[x])) + (option.setXLabelInc));
-                    //   }
-                    // }
-                  }
-                }
-              }
-              console.log(eachXLabel[i].value, ": xlabel");
-            // } else {
-            //   console.log("asd");
-            // }
+      labelAxisColumn[i] = $("<div></div>");
+      $(columns[i]).append(labelAxisColumn[i]);
+      $(labelAxisColumn[i]).html(eachXLabel[i].value);
+      $(labelAxisColumn[i]).css({
+        position: "absolute",
+        bottom: -20,
+        width: "100%",
+        fontSize: "1.4vw",
+        textAlign:"center",
+      });
 
-            labelAxisColumn[i] = $("<div></div>");
-            $(multColumns[i][0]).append(labelAxisColumn[i]);
-            $(labelAxisColumn[i]).html(eachXLabel[i].value);
-            $(labelAxisColumn[i]).css({
-              position: "absolute",
-              bottom: -20,
-              // width: "100%",
-              width: ($(multColumns[i][0]).width() * argum[i][0].length),
-              fontSize: "1.4vw",
-              textAlign:"center",
-            });
-          }
-        }
-      }
+      // setup the fontSize of the labelAxisColumn HERE
+
 
     }
 
 
-
-//       // setup the fontSize of the labelAxisColumn HERE
-
-
-//   //set the X label, regarding the argument received from options
-//   if (option.xLabelText){
-//     // console.log("xLabelText defined as ", option.xLabelText);
-//     let xGeneralLabel = $("<div></div>");
-//     $(frame).append(xGeneralLabel);
-//     $(xGeneralLabel).html(option.xLabelText);
-//     $(xGeneralLabel).css({
-//       position: "absolute",
-//       });
-//     $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 3 )));
-//     $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
-//     // console.log(xGeneralLabel.height() , " ", bigFrame.height()); // maximun height = 5%
-//   }
-// }
+  //set the X label, regarding the argument received from options
+  if (option.xLabelText){
+    // console.log("xLabelText defined as ", option.xLabelText);
+    let xGeneralLabel = $("<div></div>");
+    $(frame).append(xGeneralLabel);
+    $(xGeneralLabel).html(option.xLabelText);
+    $(xGeneralLabel).css({
+      position: "absolute",
+      });
+    $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 3 )));
+    $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
+    // console.log(xGeneralLabel.height() , " ", bigFrame.height()); // maximun height = 5%
+  }
 
 
   /* just in case to calculate vertical distances btw element
@@ -858,8 +774,8 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   */
 
 
-    } // for let in argum
-  } // last }
+
+  }
 
 // barC([100, 201, 307, 600, 799, 878, 130, 700, 588, 80, 110, 50, 60, 70],
 // barC([100, 201, 307, 600, 799, 878, 130, 700, 588],
@@ -876,10 +792,10 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     //          {"bad":   5}]
     //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data = [
-             [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"], "2014"],
-             [[41, 50, 45, 40], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"], "2015"],
-             [[55, 66, 70, 59], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"], "2016"],
-             [[22, 33, 40, 30], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"], "2017"]],
+             [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"]],
+             [[41, 50, 45, 40], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"]],
+             [[55, 66, 70, 59], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"]],
+             [[22, 33, 40, 30], ["North", "South", "East", "West"], ["grey", "black", "blue", "red"]]],
 
     //  4- multiples numbers by column with label and the identifiers for each number
     //    i.e.: data = [
@@ -889,7 +805,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     //          [[22, 33, 40, 30], ["North", "South", "East", "West"], "terrible"],
 
     //  data to be considered in the chart:
-    // [100, 201, 307, 600, 799, 70, 888],
+    // [100, 201, 307, 600, 799, 70],
 
     // SECOND ARGUMENT
     //  chart options
@@ -907,8 +823,8 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           chartLabelBorder: "",
 
       // X Axis features:
-      setXLabel: "month", setXLabelStarts: "", setXLabelInc: 1,  //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
-      setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
+      setXLabel: "month", setXLabelStarts: "mar",  //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
+      setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "top", /*top, bottom, middle and over*/
       xLabelText: "Monthly $ spend",
 
       // Y Axis features

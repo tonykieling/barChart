@@ -50,10 +50,10 @@ function setDealArray(bArray){
 
 
 // first way: only numbers for each item, no label
-console.log("// first way: only numbers");
-let k = [10, 30, 47, 33];
-setDealArray(k);
-console.log("------------------------------------------------------------------------------\n\n")
+// console.log("// first way: only numbers");
+// let k = [10, 30, 47, 33];
+// setDealArray(k);
+// console.log("------------------------------------------------------------------------------\n\n")
 
 // // second way: only one number for item and each one with label
 // console.log("// second way: only one number for item and each one with label");
