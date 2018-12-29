@@ -1,3 +1,4 @@
+console.log("qweasd");
 // function setDealArray(mArray){
 //   let objectKeys = Object.keys(mArray);
 //   console.log("ob: " , objectKeys);
@@ -25,7 +26,7 @@ function setDealArray(bArray){
         }
       } else {
         if (isNaN(mkey)){
-          console.log("\t\"" + mkey + "\" value is " + bArray[i][mkey]);
+          console.log("\t\"" + mkey + "\" value is " + bArray[i][mkey] + "aaaa");
           hasLabel = true;
         } else {
           console.log("\t" + ((Number(mkey)) + 1) + "o value is " + bArray[i][mkey]);
@@ -56,15 +57,15 @@ function setDealArray(bArray){
 // console.log("------------------------------------------------------------------------------\n\n")
 
 // // second way: only one number for item and each one with label
-// console.log("// second way: only one number for item and each one with label");
-// k = [
-//   {"okay": 10},
-//   {"nope": 5},
-//   {"yeah": 15},
-//   {"bad":   3}
-// ];
-// setDealArray(k);
-// console.log("------------------------------------------------------------------------------\n\n")
+console.log("// second way: only one number for item and each one with label");
+k = [
+  {"okay": 10},
+  {"nope": 5},
+  {"yeah": 15},
+  {"bad":   3}
+];
+setDealArray(k);
+console.log("------------------------------------------------------------------------------\n\n")
 
 // third way: multiple numbers for item with label
 // console.log("// third way: multiple numbers for item with label");

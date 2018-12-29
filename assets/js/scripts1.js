@@ -11,7 +11,7 @@ function checkTypeOfObject(mArray){
     if (mArray[i] instanceof Array){
       console.log("Array of Arrays");
       return ("AA");
-    } else if (mArray[i] instanceof Object){   //dont need it, just in case
+    } else if (mArray[i] instanceof Object){
       console.log("Array of objects");
       return ("AO");
     }
@@ -129,18 +129,25 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   FUNCTION TO ARRANGE NUMBER'S LABELS ACCORDING USER ARGUMENT
   **********************************************************
   */
- function setXLabelNumber(argumM, numberToStart = 0, inc = 1){
-   console.log(argumM , " -- ", numberToStart, " -- ", inc);
-  let numbObj = {};
-  let arrayToReturn = [];
-  let tempNumb = numberToStart;
-  for (let counting = 0; counting < argumM; counting++){
-    numbObj = {key: counting, value: tempNumb};
-    arrayToReturn.push(numbObj);
-    tempNumb += inc;
+  function setXLabelNumber(argumM, numberToStart = 0, inc = 1){
+    // console.log(argumM , " -- ", numberToStart, " -- ", inc);
+    if (typeof(numberToStart) == "string"){
+      // console.log("here string");
+      numberToStart = (Number(numberToStart));
+      if (isNaN(numberToStart)){
+        numberToStart = 0;
+      }
+    }
+    let numbObj = {};
+    let arrayToReturn = [];
+    let tempNumb = numberToStart;
+    for (let counting = 0; counting < argumM; counting++){
+      numbObj = {key: counting, value: tempNumb};
+      arrayToReturn.push(numbObj);
+      tempNumb += inc;
+    }
+    return (arrayToReturn);
   }
-  return (arrayToReturn);
- }
 
 
 
@@ -171,17 +178,15 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       left: 50, // check this out later
       width: option.frameWidth,
       height: option.frameHeight,
-      backgroundColor: option.setBigFrameColor,
-      border: option.setBigFrameBorder
+      backgroundColor: "#E0E4E3",
+      border: "solid 1px black"
     });
 
-    if (!option.setBigFrameColor){ // if no background color definition
-      // console.log("no color");
-      $(bigFrame).css("backgroundColor", "white");
+    if (option.setBigFrameColor){ // if no background color definition
+      $(bigFrame).css("backgroundColor", option.setBigFrameColor);
     }
-    if (!option.setBigFrameBorder){ // if no border definition
-      // console.log("no border");
-      $(bigFrame).css("border", "none");
+    if (option.setBigFrameBorder){ // if no border definition
+      $(bigFrame).css("border", option.setBigFrameBorder);
     }
 
 
@@ -200,9 +205,21 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       width: "100%",
       fontFamily: `${option.chartLabelFontFamily}, "Arial"`,
       fontSize: option.chartLabelFontSize,
-      color: option.chartLabelColor,
-      border: option.chartLabelBorder,
+      color: "darkslategrey",
+      backgroundColor: "#E0E4E3",
+      border: "",
     });
+    if (option.chartLabelFontColor){
+      $(chartLabel).css("color", option.chartLabelFontColor);
+    }
+    if (option.chartLabelBackColor){
+      $(chartLabel).css("backgroundColor", option.chartLabelColor);
+    } else if (option.setBigFrameColor){
+      $(chartLabel).css("backgroundColor", option.setBigFrameColor);
+    }
+    if (option.chartLabelBorder){
+      $(chartLabel).css("border", option.chartLabelBorder);
+    }
 
     if (!option.chartLabelText){  // if no chartLabel defined by the user, the room for chartLabel has to be small (3% of the whole frame)
       $(chartLabel).css("height", (option.frameHeight * 0.03));
@@ -267,9 +284,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
 
 
-
-// console.log("offSetVarVert = ", parseFloat(offSetVarVert));
-
     let frameHeight = ((option.frameHeight * (1 - offSetVarVert)) - 35); // 35 is related to the arrow spot
     let frameWidth = ((option.frameWidth * (1 - offSetVarHoriz)) - 85);  // 85 from the divisionLabel
 
@@ -284,8 +298,16 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             biggestNumber = temp;
           }
       }
+    } else if (typeOfData == "AO"){
+      biggestNumber = 0;
+      for (let c in argum){
+        for (let k in argum[c]){
+          if (argum[c][k] > biggestNumber){
+            biggestNumber = argum[c][k];
+          }
+        }
+      }
     }
-
 
     let ceilChart = biggestNumber * 1.02;   //it gives a offset to the frame chart related to the biggest column
     if (option.setMaximunValue){
@@ -294,15 +316,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       }
     }
 
-    // it is used only in absolute mode, note percent mode
-    // maybe it is not mattering
-    // if (biggestNumber % 5 != 0){
-    //   let count = 1;
-    //   while ((ceilChart % 5) != 0){
-    //     ceilChart = Math.floor(ceilChart) + count;
-    //     count++;
-    //   }
-    // }
 
     //frame to the bar chart
     let frame = $("<div></div>");
@@ -318,6 +331,8 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     });
 
 
+
+    // Draw the legend
     if (typeOfData == "AA"){
       let legendText = [];
       let legendColor = [];
@@ -507,7 +522,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
         });
 
       if (option.setDivisionsOverColumns){
-        $(divisions[countDivision]).css("zIndex", 11);
+        $(divisions[countDivision]).css("zIndex", 12);
       }
 
 
@@ -612,19 +627,26 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       }
 
 
+
+      // deal with Only One Array structure
       if (typeOfData == "OOA"){
+        console.log("dealing with Only One Array");
         //column creation for each number received as data within the array ou object
         columns[i] = $("<div></div>");
+        $(frame).append(columns[i]);
         $(columns[i]).css({
           position: "absolute",
           bottom: barBottom,
           left: vleft,
-          backgroundColor: "blue",
+          backgroundColor: "DarkCyan",
           width: columnWidth,
           height: ((argum[i] / ceilChart) * frameHeight),
           zIndex: 10,
         });
-        $(frame).append(columns[i]);
+        if (option.setBarColor){
+          $(columns[i]).css("backgroundColor", option.setBarColor);
+        }
+
 
 
         //COLUMN LABEL
@@ -692,7 +714,10 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       }
 
 
+
+      // deal with Array of Arrays
       if (typeOfData == "AA"){
+        console.log("dealing with Array os Arrays");
         let tempVleft = vleft;
         multColumns[i] = [];
         for (let subBar in argum[i][0]){
@@ -705,7 +730,8 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             width: (columnWidth / (Number(argum[i][0].length))),
             left: tempVleft,
             height: (((argum[i][0][subBar]) / ceilChart) * frameHeight),
-            backgroundColor: argum[i][2][subBar]
+            backgroundColor: argum[i][2][subBar],
+            zIndex: 10,
           });
           tempVleft += ($(multColumns[i][subBar]).width());
 
@@ -794,93 +820,127 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       }
 
 
-      //dont need this!!
-    //set the X label, regarding the argument received from options
-    // if (option.xLabelText){
-    //   // console.log("xLabelText defined as ", option.xLabelText);
-    //   let xGeneralLabel = $("<div></div>");
-    //   $(frame).append(xGeneralLabel);
-    //   $(xGeneralLabel).html(option.xLabelText);
-    //   $(xGeneralLabel).css({
-    //     position: "absolute",
-    //     });
-    //   $((xGeneralLabel).css("bottom", (-1) * (parseInt($(labelAxisColumn[0]).css("height")) * 2 )));
-    //   $((xGeneralLabel).css("left", (((parseFloat($(frame).css("width"))) - (parseFloat($(xGeneralLabel).css("width")))) / 2)));
-    //   // console.log(xGeneralLabel.height() , " ", bigFrame.height()); // maximun height = 5%
-    // }
+      // deal with Array of Objects structure
+      if (typeOfData == "AO"){
+        console.log("dealing with Array of Objects");
+
+        for (let be in argum[i]){
+          //column creation for each number received as data within the array ou object
+          columns[i] = $("<div></div>");
+          $(frame).append(columns[i]);
+          $(columns[i]).css({
+            position: "absolute",
+            bottom: barBottom,
+            left: vleft,
+            backgroundColor: "darksalmon",
+            width: columnWidth,
+            height: ((argum[i][be] / ceilChart) * frameHeight),
+            zIndex: 10,
+          });
+        if (option.setBarColor){
+          $(columns[i]).css("backgroundColor", option.setBarColor);
+        }
 
 
+        //COLUMN LABEL
+        if (option.setColumnWithLabel == true){
+          //label within each column
+          labelColumns[i] = $("<div></div>");
+          $(columns[i]).append(labelColumns[i]);
+          $(labelColumns[i]).html(argum[i][be]);
+          $(labelColumns[i]).css({
+            position: "absolute",
+            fontFamily: `${option.setColumnsFont}, "Arial"`,  //fontFamily default is Arial
+            width: "100%",
+            fontSize: "1.5vw",
+            zIndex: 11,  //same columns[i]'s zIndex
+            textAlign: "center",
+          });
+        }
 
-  /* just in case to calculate vertical distances btw element
-  let xlabelh   = (parseInt($(xGeneralLabel).css("height")));
-  let xlabelpos = (parseInt($(xGeneralLabel).offset().top));
-  let frametop  = (parseInt($(frame).offset().top));
-  console.log("xlabelH: " + xlabelh + "\nxlabelPos: " + xlabelpos + "\nframetop: " + frametop);
-  let distancek = ((xlabelh + xlabelpos) - frametop);
-  console.log("distance is: " + distancek);
+          // vertical position: top, bottom or middle
+          if (typeof(option.setLabelColumnPos) == "string"){
+            if (option.setLabelColumnPos.toLowerCase() == "top"){
+              $(labelColumns[i]).css("top", 0);
+            } else if (option.setLabelColumnPos.toLowerCase() == "bottom"){
+              $(labelColumns[i]).css("bottom", 0);
 
-  // $(frame).css("height", distancek);
-  // var frameHeight = distancek;
-  // var frameWidth = option.frameWidth * 0.7;
-  */
+            } else if (option.setLabelColumnPos.toLowerCase() == "middle"){
+              $(labelColumns[i]).css("bottom",
+                                (((parseInt($(columns[i]).css("height"))) - (parseInt($(labelColumns[i]).css("height")))) / 2));
+            } else if (option.setLabelColumnPos.toLowerCase() == "over"){
+              $(labelColumns[i]).css("bottom",
+                                ((parseInt($(columns[i]).css("height")))));
+            } else {
+              console.log("columnposition: gonna be top (default)");
+              $(labelColumns[i]).css("top", 0);
+            }
+          } else{
+            console.log("Please the Column Label Position parameter (setLabelColumnPos) has to be a string 'TOP', 'BOTTOM' or 'MIDDLE'.");
+            $(labelColumns[i]).css("top", 0);
+          }
+
+          //insert a Xlabel for each column here
+          // this type of data structure contains labels, ridding of any field of label passed for the user, besides the data
+          labelAxisColumn[i] = $("<div></div>");
+          $(columns[i]).append(labelAxisColumn[i]);
+          $(labelAxisColumn[i]).html(be);
+          $(labelAxisColumn[i]).css({
+            position: "absolute",
+            bottom: -20,
+            width: "100%",
+            fontSize: "1.4vw",
+            textAlign:"center",
+          });
+        }
+      }
 
 
     } // for let in argum
   } // last }
 
-// barC([100, 201, 307, 600, 799, 878, 130, 700, 588, 80, 110, 50, 60, 70],
-// barC([100, 201, 307, 600, 799, 878, 130, 700, 588],
   barC(
     // FIRST ARGUMENT
     // Data  can be:
     //  1- only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
-    //    i.e.: data = [100, 200, 150, 350, 88]
+    //    i.e.: data =
+            // [100, 200, 150, 350, 88, 77, 89],
     //  2- only one number by column, with label.
-    //    i.e.: data = [
-    //          {"okay": 10},
-    //          {"nope": 8},
-    //          {"yeah": 14},
-    //          {"bad":   5}]
+    //    i.e.: data =
+            [{"okay": 10},
+            {"nope": 8},
+            {"yeah": 14},
+            {"bad":   5}],
     //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data = [
-             [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["green", "black", "blue", "red"], "2014"],
-             [[41, 50, 45, 40], ["North", "South", "East", "West"], ["green", "black", "blue", "red"], "2015"],
-             [[55, 66, 70, 59], ["North", "South", "East", "West"], ["green", "black", "blue", "red"], "2016"],
-             [[22, 33, 40, 30], ["North", "South", "East", "West"], ["green", "black", "blue", "red"], "2017"]],
-
-    //  4- multiples numbers by column with label and the identifiers for each number
-    //    i.e.: data = [
-    //          [[99, 88, 80, 70], ["North", "South", "East", "West"], "okay"],
-    //          [[41, 50, 45, 40], ["North", "South", "East", "West"], "bad"],
-    //          [[55, 66, 70, 59], ["North", "South", "East", "West"], "regular"],
-    //          [[22, 33, 40, 30], ["North", "South", "East", "West"], "terrible"],
-
-    //  data to be considered in the chart:
-    // [100, 201, 307, 600, 799, 70, 888],
+            //  [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
+            //  [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2015"],
+            //  [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
+            //  [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],
 
     // SECOND ARGUMENT
     //  chart options
     {
-      // barColors: ["white", "black", "blue", "red"], //collor
       // bigFrame Features:
-      frameHeight: 500, frameWidth: 700, /* consider color and border features*/
+      frameHeight: 400, frameWidth: 700, /* consider color and border features*/
       setBigFrameColor: "#E0E4E3", setBigFrameBorder: "solid 0.5px black",
 
       // chartFrame features:
-      setFrameColor: "#97CEC0",
+      // setFrameColor: "#97CEC0",
+      setFrameColor: "lightyellow",
+      setBarColor: "seagreen",
 
       // chartLabelFeatures:
-      chartLabelText: "ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: "", chartLabelColor: "green",
-          chartLabelBorder: "",
+      chartLabelText: "This is a ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: "", chartLabelFontColor: "firebrick",
+          chartLabelBorder: "", chartLabelBackColor: "red",
 
       // X Axis features:
-      // setXLabel: "month", setXLabelStarts: "mar", setXLabelInc: 3,  //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
+      setXLabel: "month", setXLabelStarts: "dec", setXLabelInc: 1,  //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
       setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
-      xLabelText: "Monthly $ spend",
 
       // Y Axis features
-      setMaximunValue: 110,
-      numberOfDivisionsYAxis: 10, typeOfDivision: "percent", setDivLabelFontSize: "", setDivisionsOverColumns: 0,
+      // setMaximunValue: 110,
+      numberOfDivisionsYAxis: 5, typeOfDivision: "absolute", setDivLabelFontSize: "", setDivisionsOverColumns: false,
 
       // legend features - when a columns has more than one value (columns). It has to have a definition for each one
       // setLegend1Color: "blue", setLegend1Text: "Legend1", /* this is the label, which can be set in the data variable, as well*/
@@ -891,10 +951,5 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     "#barChartPlace"
    );
 
-
-  //  barC({["jan", 100], ["feb", 200], ["mar", 150], ["apr", 230]});
-
-// barC({"month": "jan", {"north":10, "south":20}},
-//       {"montn": "feb", {"north":20, "south": 30}});
 
 });
