@@ -34,3 +34,7 @@
     - review and organize better the code and functions
     - perform tests with differen settings
     - document
+
+#v.04 is done
+- v3 plus:
+- emphasis feature (bold and border to hove function)

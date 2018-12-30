@@ -359,58 +359,86 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
 
 
-    // Draw the legend
-    if (typeOfData == "AA"){
-      let legendText = [];
-      let legendColor = [];
-      const legendColorHeight = (frameWidth * 0.06);
-      const legendColorWidth = (frameWidth * 0.06);
-      const topLegendColor = (legendColorHeight * 0.75);
-      let topLegend = topLegendColor;
+    // //*************************************** */
+    // // Draw the legend ********************** */
+    // //*************************************** */
+    // if (typeOfData == "AA"){
+    //   let legendText = [];
+    //   let legendColor = [];
+    //   const legendColorHeight = (frameWidth * 0.05);
+    //   const legendColorWidth = (frameWidth * 0.05);
+    //   const topLegendColor = (legendColorHeight * 0.75);
+    //   let topLegend = topLegendColor;
 
-      let countSpaces = ((legendColorHeight * (Number(argum[0][1].length))) +
-                       (((Number(argum[0][1].length)) - 1) * (topLegendColor / 2)) + (2 * topLegendColor));
+    //   // it will calculate the spaces according the number of columns
+    //   let countSpaces = ((legendColorHeight * (Number(argum[0][1].length))) +
+    //                    (((Number(argum[0][1].length)) - 1) * (topLegendColor / 2)) + (2 * topLegendColor));
 
-      $(frame).css("left", (frameWidth / 5));
-      let legendFrame = $("<div></div>");
-      $(frame).append(legendFrame);
-      $(legendFrame).css({
-        position: "absolute",
-        width: 130,
-        height: countSpaces,
-        border: "solid 0.5px grey",
-      });
-      $(legendFrame).css({
-        top: (($(legendFrame).height()) / 2),
-        left: ((frameWidth) + (($(legendFrame).width()) / 5))
-      });
+    //   $(frame).css("left", (frameWidth / 5));
+    //   let legendFrame = $("<div></div>");
+    //   $(frame).append(legendFrame);
+    //   $(legendFrame).css({
+    //     position: "absolute",
+    //     width: ((option.frameWidth * offSetVarHoriz) * 0.7), // 80% of the whole frameWidth's Horizontal offset
+    //     height: countSpaces,
+    //     border: "solid 0.5px grey",
+    //   });
+    //   $(legendFrame).css({
+    //     top: (($(legendFrame).height()) / 2),
+    //     left: ((frameWidth) + (($(legendFrame).width()) / 5))
+    //   });
 
-      for (let i in argum){
-        for (let k in argum[i][1]){
-          legendColor[k] = $("<div></div>");
-          $(legendFrame).append(legendColor[k]);
-          $(legendColor[k]).css({
-            position: "absolute",
-            backgroundColor: (argum[i][2][k]),
-            height: legendColorHeight,
-            width: legendColorWidth,
-            left: (legendColorWidth * 0.75),
-            top: topLegend,
-          });
+    //   for (let i in argum){
+    //     for (let k in argum[i][1]){
+    //       legendColor[k] = $("<div></div>");
+    //       $(legendFrame).append(legendColor[k]);
+    //       $(legendColor[k]).css({
+    //         position: "absolute",
+    //         backgroundColor: (argum[i][2][k]),
+    //         height: legendColorHeight,
+    //         width: legendColorWidth,
+    //         left: (legendColorWidth * 0.75),
+    //         top: topLegend,
+    //       });
 
-            legendText[k] = $("<div></div>");
-            $(legendFrame).append(legendText[k]);
-            $(legendText[k]).html(argum[i][1][k]);
-            $(legendText[k]).css({
-              position: "absolute",
-              left: ((legendColorWidth * 0.75) + (legendColorHeight * 1.5)),
-              top: topLegend,
-            });
-            topLegend = (topLegendColor + ((Number(k) + 1) * legendColorHeight) + ((Number(k) + 1) * (topLegendColor / 2)));
-        }
-        break;
-      }
-    }
+    //       legendText[k] = $("<div></div>");
+    //       $(legendFrame).append(legendText[k]);
+    //       $(legendText[k]).html(argum[i][1][k]);
+    //       $(legendText[k]).css({
+    //         position: "absolute",
+    //         left: ((legendColorWidth * 0.75) + (legendColorHeight * 1.5)),
+    //         top: topLegend,
+    //       });
+
+    //       if (option.setEmphasis){
+    //         $(legendColor[k]).hover(function(){
+    //           $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
+    //           $(legendText[k]).css("fontWeight", "bold");
+
+    //           }, function(){
+    //             $(this).css("border", "none");
+    //             $(legendText[k]).css("fontWeight", "normal");
+    //         });
+    //       }
+
+    //         topLegend = (topLegendColor + ((Number(k) + 1) * legendColorHeight) + ((Number(k) + 1) * (topLegendColor / 2)));
+    //     }
+    //     break;
+    //   }
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     if (option.setFrameColor){
       $(frame).css("backgroundColor", option.setFrameColor);
@@ -624,8 +652,9 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
     let columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
     let spaceBtwCol = columnWidth / 2;
-    // console.log("columwidth " + columnWidth + "\nframewidth " + frameWidth + "\ncolumnsNumber "+ columnsNumber + "\ndiff "+ diff)
 
+
+    // dealing with different space btw columns
     if (option.setSpaceColumn){
       if ((option.setSpaceColumn.toLowerCase()) == "extra"){
         console.log("Space btw the columns has to be extra!");
@@ -745,6 +774,28 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           fontSize: "1.4vw",
           textAlign:"center",
         });
+
+
+          // emphasis and moviment if so
+          if (option.setEmphasis){
+            $(columns[i]).hover(function(){
+              $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
+              $(labelAxisColumn[i]).css("fontWeight", "bold");
+              if (option.setColumnWithLabel == true){
+                $(labelColumns[i]).css("fontWeight", "bold");
+              }
+              }, function(){
+                $(this).css("border", "none");
+                $(labelAxisColumn[i]).css("fontWeight", "normal");
+                if (option.setColumnWithLabel == true){
+                  $(labelColumns[i]).css("fontWeight", "normal");
+                }
+            });
+        }
+
+
+
+
       }
 
 
@@ -752,10 +803,80 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       // deal with Array of Arrays
       if (typeOfData == "AA"){
         console.log("dealing with Array os Arrays");
+
+
+        //*************************************** */
+        // Draw the legend ********************** */
+        //*************************************** */
+        let legendText = [];
+        let legendColor = [];
+        const legendColorHeight = (frameWidth * 0.05);
+        const legendColorWidth = (frameWidth * 0.05);
+        const topLegendColor = (legendColorHeight * 0.75);
+        let topLegend = topLegendColor;
+
+        // it will calculate the spaces and size for the legend frame, according the number of columns
+        let countSpaces = ((legendColorHeight * (Number(argum[0][1].length))) +
+                        (((Number(argum[0][1].length)) - 1) * (topLegendColor / 2)) + (2 * topLegendColor));
+
+        $(frame).css("left", (frameWidth / 5));
+        let legendFrame = $("<div></div>");
+        $(frame).append(legendFrame);
+        $(legendFrame).css({
+          position: "absolute",
+          width: ((option.frameWidth * offSetVarHoriz) * 0.7), // 80% of the whole frameWidth's Horizontal offset
+          height: countSpaces,
+          border: "solid 0.5px grey",
+        });
+        $(legendFrame).css({
+          top: (($(legendFrame).height()) / 2),
+          left: ((frameWidth) + (($(legendFrame).width()) / 5))
+        });
+
+        for (let i in argum){
+          for (let k in argum[i][1]){
+            legendColor[k] = $("<div></div>");
+            $(legendFrame).append(legendColor[k]);
+            $(legendColor[k]).css({
+              position: "absolute",
+              backgroundColor: (argum[i][2][k]),
+              height: legendColorHeight,
+              width: legendColorWidth,
+              left: (legendColorWidth * 0.75),
+              top: topLegend,
+            });
+
+            legendText[k] = $("<div></div>");
+            $(legendFrame).append(legendText[k]);
+            $(legendText[k]).html(argum[i][1][k]);
+            $(legendText[k]).css({
+              position: "absolute",
+              left: ((legendColorWidth * 0.75) + (legendColorHeight * 1.5)),
+              top: topLegend,
+            });
+
+
+
+            if (option.setEmphasis){
+              $(legendColor[k]).hover(function(){
+                $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
+                $(legendText[k]).css("fontWeight", "bold");
+
+                }, function(){
+                  $(this).css("border", "none");
+                  $(legendText[k]).css("fontWeight", "normal");
+              });
+            }
+
+              topLegend = (topLegendColor + ((Number(k) + 1) * legendColorHeight) + ((Number(k) + 1) * (topLegendColor / 2)));
+          }
+          break;
+        }
+
+
         let tempVleft = vleft;
         multColumns[i] = [];
         for (let subBar in argum[i][0]){
-          // multColumns[i] = [];
           multColumns[i][subBar] = $("<div></div>");
           $(frame).append(multColumns[i][subBar]);
           $(multColumns[i][subBar]).css({
@@ -770,12 +891,10 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           tempVleft += ($(multColumns[i][subBar]).width());
 
 
-
           if (option.setColumnWithLabel == true){
             //label within each column
             labelColumns[i] = [];
               labelColumns[i][subBar] = $("<div></div>");
-              // console.log(labelColumns[i][subBar], ": asd");
               $(multColumns[i][subBar]).append(labelColumns[i][subBar]);
               $(labelColumns[i][subBar]).html(argum[i][0][subBar]);
               $(labelColumns[i][subBar]).css({
@@ -828,7 +947,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
                   console.log("check this out later");
                 }
               }
-              // console.log(eachXLabel[i].value, ": xlabel");
             } else {
               if (i == 0){
                 for (let mv = 0; mv < argum[i].length; mv++){
@@ -851,7 +969,30 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             });
           }
         }
+
+
+        // check emphasis and apply the functionally if so
+        // this is for the legendcolor context
+        if (option.setEmphasis){
+          for (let count in argum[i][0]){
+            $(legendColor[count]).hover(function(){
+              $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
+              $(legendText[count]).css("fontWeight", "bold");
+              for (let n in multColumns[i]){
+                $(multColumns[n][count]).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
+              }
+
+              }, function(){
+                $(this).css("border", "none");
+                $(legendText[count]).css("fontWeight", "normal");
+                for (let m in multColumns[i]){
+                  $(multColumns[m][count]).css("border", "none");
+                }
+            });
+          }
+        }
       }
+
 
 
       // deal with Array of Objects structure
@@ -926,6 +1067,24 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             fontSize: "1.4vw",
             textAlign:"center",
           });
+
+
+          // emphasis and moviment if so
+          if (option.setEmphasis){
+              $(columns[i]).hover(function(){
+                $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
+                $(labelAxisColumn[i]).css("fontWeight", "bold");
+                if (option.setColumnWithLabel == true){
+                  $(labelColumns[i]).css("fontWeight", "bold");
+                }
+                }, function(){
+                  $(this).css("border", "none");
+                  $(labelAxisColumn[i]).css("fontWeight", "normal");
+                  if (option.setColumnWithLabel == true){
+                    $(labelColumns[i]).css("fontWeight", "normal");
+                  }
+              });
+          }
         }
       }
 
@@ -938,7 +1097,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     // Data  can be:
     //  1- only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data =
-            [100000, 200000, 150000, 350000, 88000, 77000, 89000],
+            // [100000, 200000, 150000, 350000, 88000, 77000, 89000],
     //  2- only one number by column, with label.
     //    i.e.: data =
             // [{"okay": 10},
@@ -948,29 +1107,29 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             // {"soso": 9}],
     //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data = [
-            //  [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
-            //  [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2015"],
-            //  [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
-            //  [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],
+             [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
+             [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2015"],
+             [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
+             [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],
 
     // SECOND ARGUMENT
     //  chart options
     {
       // bigFrame Features:
-      frameHeight: 400, frameWidth: 700, /* consider color and border features*/
+      frameHeight: 400, frameWidth: 800, /* consider color and border features*/
       setBigFrameColor: "#E0E4E3", setBigFrameBorder: "solid 0.5px black",
 
       // chartFrame features:
       // setFrameColor: "#97CEC0",
       setFrameColor: "lightyellow",
-      setBarColor: "seagreen",
+      setBarColor: "seagreen", setEmphasis: true,
 
       // chartLabelFeatures:
       chartLabelText: "This is a ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "firebrick",
           chartLabelBorder: "", chartLabelBackColor: "red",
 
       // X Axis features:
-      setXLabel: "month", setXLabelStarts: "dec", setXLabelInc: 1,
+      setXLabel: "month", setXLabelStarts: 2000, setXLabelInc: -3,
         //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
       setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
       setSpaceColumn: "small",

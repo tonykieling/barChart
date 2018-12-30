@@ -3,8 +3,38 @@ requirements:
   - fontSize for the columns
   - OKAY space btw columns:
     small, normal and extra space
-  - animation
+  - OKAY animation
     hover in the column and change the color or add border   of the particular column and bold the string related to it
     hover legend and show the particular bars related to that color
 setup Github demo Page
 READMD.md
+
+# Improvements:
+There is a function to adjust the fontsize within the element, and it's working to the labelChart element, but I wanted to apply to other elements,
+such as the Y and X Axis labels, the legend and columns labels. This is one of the improvements.
+Another improvement I wanted to work is to adjust bigger numbers to the columns width.
+Also, I would like to figure out better the case of one more label for the Xs labels, such as year under the months.
+The review of the code and the functions.
+
+# Chart features
+User has to define the data, which can be:
+  1- Simple array, only numbers
+  2- Array of objects, where the key is the label and the value is the number
+  3- Array of arrays with 4 arrays. The first is the numbers, second is the label for each subcolumn
+      third contains the colors for each subcolumn, and the forth is the X Axis label
+
+User may define:
+1- Frame
+  The size of the frame (width and height)
+  Backgound color and border
+2- Chart label
+  Font size, family and color, border of the chart label and backgound color for it
+3- Chart's frame
+  Color
+  Bar color (only for Simple Arrays and Array of objects)
+  Emphasis, wchich will give a small moviment and bold to the bars when hover it
+4- Axis X features
+
+5- Axis Y features
+
+6- The spot in the html file where the bar chart will be placed.
