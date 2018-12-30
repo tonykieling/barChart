@@ -1,5 +1,5 @@
-December 25th, 2018
-v0.1 is done
+- December 25th, 2018
+#v0.1 is done
  - receives a simple array as data
  - can set bigframe height and width, color and border
  - chartLabel can set set font (color, size and type), as well no chartLabel
@@ -11,9 +11,26 @@ v0.1 is done
  - X Axis can set month and start from any month that the system will fill the other labels
  - there is an option to a generic label for X Axis
 
-Next version(s):
- - adjust either vertical as horizontal barchart frame's position (consider the element after the frame, sucha as the labels)
- - receive multiple data's values and labels (plus legend and columns with multiple values diff by color)
- - figure out and format big digits to the X Axis labels or columns' labels
- - check auto fill for the xlabel besides months
- - review and organize better the code and functions
+  Next version(s):
+    - adjust either vertical as horizontal barchart frame's position (consider the element after the frame, sucha as the labels)
+    - receive multiple data's values and labels (plus legend and columns with multiple values diff by color)
+    - figure out and format big digits to the X Axis labels or columns' labels
+    - check auto fill for the xlabel besides months
+    - review and organize better the code and functions
+
+
+- December 29th, 2018
+#v.03 is done
+- v1 plus:
+- it receives data as a SIMPLE ARRAY, an ARRAY OF OBJECTS (label for each numbers)
+  and ARRAY OF ARRAY, which contais multiple numbers for each column, along with color and label (this data draws legend).
+- no more XGeneral label
+- X Axis can also receive number and increment (or decrement if -) the label's number
+- central vertical and horizontal frame position is working fairly well
+
+  Next version(s):
+    - figure out and format big digits to the X Axis labels or columns' labels
+    - check fontsizes and define better when to apply
+    - review and organize better the code and functions
+    - perform tests with differen settings
+    - document

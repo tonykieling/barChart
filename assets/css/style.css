@@ -3,11 +3,11 @@
 */
 
 body{
-  background: grey;
+  background: rgba(159, 185, 129, 0.541);
   font-family: Arial, Helvetica, sans-serif
 }
 h1:hover{
-  color: blueviolet
+  color: rgb(16, 39, 139)
 }
 
 /*

@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
+/* eslint-disable indent */
 $(function(){
   "use strict";
 
@@ -21,6 +24,32 @@ function checkTypeOfObject(mArray){
 }
 
 
+
+//*******************************************
+// function to define the size of the space btw columns,
+// according user's arguments
+// It will be used to build the columns
+// *********************************************
+function aboutColumnsFunc(frameWidthF, columnsNumberF, typeOfSpace){
+  console.log(frameWidthF, columnsNumberF, typeOfSpace);
+  let valueToReturn = [];
+  if (typeOfSpace == "extra"){
+    console.log("this is extra space");
+    valueToReturn.push(frameWidthF / (columnsNumberF + (columnsNumberF + 1)));
+    valueToReturn.push(frameWidthF / (columnsNumberF + (columnsNumberF + 1)));
+    console.log(valueToReturn);
+    return valueToReturn;
+  } else if (typeOfSpace == "small"){
+    console.log("this is small space");
+    valueToReturn.push(frameWidthF / (columnsNumberF + ((columnsNumberF + 1) * 0.25)));
+    valueToReturn.push((frameWidthF / (columnsNumberF + ((columnsNumberF + 1) * 0.25))) * 0.25);
+    console.log(valueToReturn);
+    return valueToReturn;
+  }
+
+}
+
+
 // it checks if the fontSize passed by the user is fittable in the current element, which can be chartLabel or Xlabel.
 // it returns fontSize fittable for the attribute in case, height or width.
 // the maximum fontSize possible will be regarding the definition of the host element width or height
@@ -37,8 +66,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   //     "\noperatorF: " + operatorF +
   //      "\nfontFamilyF: " + fontFamilyF
   // );
-
-  // const tempFontSize = (parseInt(fontSizeF));
 
   let returnVar = 0;
 
@@ -158,7 +185,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   FUNCTION TO GENERATE A BAR CHART *************************
   **********************************************************
   */
-  function barC(argum, option = "", element = ""){
+  function drawBarChart(argum, option = "", element = ""){
     if (!element){
       element = "body";
     }
@@ -463,22 +490,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
 
 
-
-    // these variables are related to the columns but were defined here in order to have the width btw columns labels and chartdivision labels
-    let columnsNumber = argum.length;
-
-    // diff will be used to calculate the space btw the columns
-    let diff = 0;
-    if (columnsNumber % 2 == 0){ // for even number of columns
-      diff = 0.5
-    } else {  // for odd number of columns
-      diff = 1;
-    }
-
-    var columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
-    // console.log("columwidth " + columnWidth + "\nframewidth " + frameWidth + "\ncolumnsNumber "+ columnsNumber + "\ndiff "+ diff)
-
-
     // +++++++++++++++++++++++++++++++++++++++++++++
     // ++++++++++ CHART DIVISIONS ELEMENT ++++++++++
     // +++++++++++++++++++++++++++++++++++++++++++++
@@ -498,7 +509,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
     //check whether the user wants RELATIVE mode and apply it if so
     if ((option.typeOfDivision).toLowerCase() == "percent"){
-      // console.log("type PERCENT");
       multTextLabelDivision = parseInt(100 / numberOfDivisions);
       textLabelDivision = multTextLabelDivision;
       if (!option.numberOfDivisionsYAxis){
@@ -525,7 +535,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
         $(divisions[countDivision]).css("zIndex", 12);
       }
 
-
       //insert a label for each division here
       labelDivision[countDivision] = $("<div></div>");
       $(frame).append(labelDivision[countDivision]);
@@ -536,12 +545,12 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
 
         if (countDivision == 0){
 
-          // fontSize of the labelDiv right now is related to the column width
+          // fontSize of the labelDiv right now is related to the frameWidth
           tempLabelDivFontS =
                         (setFontSize("100%",               // call setFontSize with the arguments: chartLabelText
                           bigFrame,                            // bigFrame is the current HTML element parent
                           "width",                            // apply the size related to the height
-                          columnWidth * 0.8,          // maximum size of the current element is supposed to support
+                          frameWidth * 0.07,          // maximum size of the current element is supposed to support
                           20, //user's fontSize
                           "-",                                 // the fontSize will decrease, just in case user'a FontSize too big
                           "Arial") );     // fontFamily to be used
@@ -554,24 +563,24 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
             if (option.setDivLabelFontSize < 8){
               tempLabelDivFontS = 8;
             } else{
-              // fontSize of the labelDiv right now is related to the column width
+              // fontSize of the labelDiv right now is related to the frameWidth
               tempLabelDivFontS =
                         (setFontSize(biggestNumber,       // call setFontSize with the arguments: chartLabelText
                           bigFrame,                       // bigFrame is the current HTML element parent
                           "width",                        // apply the size related to the height
-                          columnWidth * 0.8,              // maximum size of the current element is supposed to support
+                          frameWidth * 0.07,              // maximum size of the current element is supposed to support
                           option.setDivLabelFontSize,     //user's fontSize
                           "-",                            // the fontSize will decrease, just in case user'a FontSize too big
                           "Arial") );                     // fontFamily to be used
             }
 
           } else { // NO user font Definition, that means, programmer's definition
-            // fontSize of the labelDiv right now is related to the column width
+            // fontSize of the labelDiv right now is related to the frameWidth
             tempLabelDivFontS =
                         (setFontSize(biggestNumber,       // call setFontSize with the arguments: chartLabelText
                           bigFrame,                       // bigFrame is the current HTML element parent
                           "width",                        // apply the size related to the height
-                          columnWidth * 0.8,              // maximum size of the current element is supposed to support
+                          frameWidth * 0.07,              // maximum size of the current element is supposed to support
                           15,                             // no user's fontSize definition, so 15 is gonna play (programmer definition)
                           "-",                            // the fontSize will decrease, just in case user'a FontSize too big
                           "Arial") );                     // fontFamily to be used
@@ -594,27 +603,52 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   }
 
 
-// these variables were defined above in order to have the same width for the columns and the Y axis labels
-    // let columnsNumber = argum.length;
 
-    // // diff will be used to calculate the space btw the columns
-    // let diff = 0;
-    // if (columnsNumber % 2 == 0){ // for even number of columns
-    //   diff = 0.5
-    // } else {  // for odd number of columns
-    //   diff = 1;
-    // }
 
-    // let columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
+  //******************************************************************
+  //******************************************************************
+  // Working with columns and their aspects   ************************
+  //******************************************************************
+  //******************************************************************
+
+    // these variables are related to the columns but they were defined here in order to have the same width btw columns labels and chartdivision labels
+    let columnsNumber = argum.length;
+
+    // diff will be used to calculate the space btw the columns
+    let diff = 0;
+    if (columnsNumber % 2 == 0){ // for even number of columns
+      diff = 0.5;
+    } else {  // for odd number of columns
+      diff = 1;
+    }
+
+    let columnWidth = frameWidth / (columnsNumber + ((Math.floor(columnsNumber / 2)) + diff));
     let spaceBtwCol = columnWidth / 2;
+    // console.log("columwidth " + columnWidth + "\nframewidth " + frameWidth + "\ncolumnsNumber "+ columnsNumber + "\ndiff "+ diff)
+
+    if (option.setSpaceColumn){
+      if ((option.setSpaceColumn.toLowerCase()) == "extra"){
+        console.log("Space btw the columns has to be extra!");
+        let tempAboutColumns = aboutColumnsFunc(frameWidth, columnsNumber, "extra");
+        columnWidth = tempAboutColumns[0];
+        spaceBtwCol = tempAboutColumns[1];
+      } else if ((option.setSpaceColumn.toLowerCase()) == "small"){
+        console.log("Small Space btw the columns.");
+        let tempAboutColumns = aboutColumnsFunc(frameWidth, columnsNumber, "small");
+        columnWidth = tempAboutColumns[0];
+        spaceBtwCol = tempAboutColumns[1];
+      }
+    }
+
+
+
+
     let barBottom = 0;
     let vleft = 0;
     let columns = [];
     let multColumns = [];
     let labelAxisColumn = [];
     let labelColumns = [];
-    let labelColumnFontSize = option.setColumnsFontSize;
-    // let eachXLabel = argum; //move THIS LINE to before the for loop
     let eachXLabel = [];
 
 
@@ -899,18 +933,19 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
     } // for let in argum
   } // last }
 
-  barC(
+  drawBarChart(
     // FIRST ARGUMENT
     // Data  can be:
     //  1- only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data =
-            // [100, 200, 150, 350, 88, 77, 89],
+            [100000, 200000, 150000, 350000, 88000, 77000, 89000],
     //  2- only one number by column, with label.
     //    i.e.: data =
-            [{"okay": 10},
-            {"nope": 8},
-            {"yeah": 14},
-            {"bad":   5}],
+            // [{"okay": 10},
+            // {"nope": 8},
+            // {"yeah": 14},
+            // {"bad":   5},
+            // {"soso": 9}],
     //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
     //    i.e.: data = [
             //  [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
@@ -931,19 +966,19 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       setBarColor: "seagreen",
 
       // chartLabelFeatures:
-      chartLabelText: "This is a ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: "", chartLabelFontColor: "firebrick",
+      chartLabelText: "This is a ChartLabel!", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "firebrick",
           chartLabelBorder: "", chartLabelBackColor: "red",
 
       // X Axis features:
-      setXLabel: "month", setXLabelStarts: "dec", setXLabelInc: 1,  //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
+      setXLabel: "month", setXLabelStarts: "dec", setXLabelInc: 1,
+        //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
       setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
+      setSpaceColumn: "small",
 
       // Y Axis features
       // setMaximunValue: 110,
-      numberOfDivisionsYAxis: 5, typeOfDivision: "absolute", setDivLabelFontSize: "", setDivisionsOverColumns: false,
+      numberOfDivisionsYAxis: 5, typeOfDivision: "percent", setDivLabelFontSize: "", setDivisionsOverColumns: false,
 
-      // legend features - when a columns has more than one value (columns). It has to have a definition for each one
-      // setLegend1Color: "blue", setLegend1Text: "Legend1", /* this is the label, which can be set in the data variable, as well*/
     },
 
     // THIRD ARGUMENT

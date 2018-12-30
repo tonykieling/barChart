@@ -1,0 +1,10 @@
+time: 3500 minutes
+requirements:
+  - fontSize for the columns
+  - OKAY space btw columns:
+    small, normal and extra space
+  - animation
+    hover in the column and change the color or add border   of the particular column and bold the string related to it
+    hover legend and show the particular bars related to that color
+setup Github demo Page
+READMD.md

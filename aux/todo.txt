@@ -79,6 +79,9 @@ v0.1 has to have:
 - OK frame sets color
 
 
-missing numbers for OOA and missing all AO
-AA is ready!
-GeneralLabel IS working OKAY - NO it isn't! Dont need it!
+Xmissing numbers for OOA and missing all AO
+XAA is ready!
+XGeneralLabel IS working OKAY - NO it isn't! Dont need it!
+Xset bar color is missing. done
+font sizes for absolute mode is not set
+
