@@ -855,19 +855,6 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
               top: topLegend,
             });
 
-
-
-            if (option.setEmphasis){
-              $(legendColor[k]).hover(function(){
-                $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
-                $(legendText[k]).css("fontWeight", "bold");
-
-                }, function(){
-                  $(this).css("border", "none");
-                  $(legendText[k]).css("fontWeight", "normal");
-              });
-            }
-
               topLegend = (topLegendColor + ((Number(k) + 1) * legendColorHeight) + ((Number(k) + 1) * (topLegendColor / 2)));
           }
           break;
@@ -977,7 +964,9 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           for (let count in argum[i][0]){
             $(legendColor[count]).hover(function(){
               $(this).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
-              $(legendText[count]).css("fontWeight", "bold");
+              $(legendText[count]).css({
+                fontWeight: "bold",
+              });
               for (let n in multColumns[i]){
                 $(multColumns[n][count]).css("border", ("solid 2px ").concat($(this).css("backgroundColor")));
               }
