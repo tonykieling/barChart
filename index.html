@@ -26,7 +26,7 @@
 
 The charts bellow are NOT pictures but real charts rendered when the page is load.</p>
 <br>
-<p> 1- First example:</p>
+<p> <h2>1- First example</h2></p>
 
   <p id=barChartPlace1>
     <!-- <script src="assets/js/script.js"></script> -->
@@ -35,10 +35,55 @@ The charts bellow are NOT pictures but real charts rendered when the page is loa
 
   <br>
   <p>PASTE THE FUNCTION CALLER WITH THE ARGUMENTS</p>
+  <xmp>
+10      drawBarChart(
+11        // FIRST ARGUMENT - data
+12                [100000, 200000, 150000, 350000, 88000, 77000, 89000, 100000],
+13
+14       {
+15          // bigFrame Features:
+            frameHeight: 400, frameWidth: 800, /* consider color and border features*/
+            setBigFrameColor: "mediumspringgreen", setBigFrameBorder: "solid 0.5px black",
+
+            // chartFrame features:
+20          setFrameColor: "lavender",
+            setEmphasis: true,
+            setBarColor: "peru",
+
+            // chartLabelFeatures:
+25          chartLabelText: "Historical Biennial Budget for the IT division", chartLabelFontFamily: "times", chartLabelFontSize: 0, chartLabelFontColor: "blue",
+            chartLabelBorder: "solid grey 0.5px", /*chartLabelBackColor: "red",*/
+
+            // X Axis features:
+            setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
+30          //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
+            setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "top", /*top, bottom, middle and over*/
+            setSpaceColumn: "small",
+
+            // Y Axis features
+35          setMaximunValue: 400000,
+            numberOfDivisionsYAxis: 8, typeOfDivision: "absolute", setDivLabelFontSize: "",
+            setDivisionsOverColumns: true,
+
+          },
+41
+          // THIRD ARGUMENT
+          //  chart position, that is, in what element it's supposed to be placed
+          "#barChartPlace1"
+45      );
+  </xmp>
+
+  <xmp>
+  Some notes:
+  1- The Y Axis is set to be absolute and with a maximun value of 400000 (lines 35 and 36).
+  2- For some user's reason, the divisions are better positione over the columns. (line 37)
+  3- the X Axis labels are number which were incremented in two at a time (line 29).
+  4- The columns' labels were set using top position (line 31)
+  </xmp>
 
   <br><br>
 
-  <p> 2- Second example:</p>
+  <p> <h2>Second Example</h2></p>
 
   <p id=barChartPlace2>
     <!-- <script src="assets/js/script.js"></script> -->
@@ -50,7 +95,7 @@ The charts bellow are NOT pictures but real charts rendered when the page is loa
 
   <br><br>
 
-  <p> 3- Third example:</p>
+  <p> <h2>3- Third example</h2></p>
 
   <p id=barChartPlace3>
     <!-- <script src="assets/js/script.js"></script> -->

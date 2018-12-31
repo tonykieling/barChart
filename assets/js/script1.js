@@ -1082,40 +1082,22 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   } // last }
 
   drawBarChart(
-    // FIRST ARGUMENT
-    // Data  can be:
-    //  1- only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
-    //    i.e.: data =
+    // FIRST ARGUMENT - data
             [100000, 200000, 150000, 350000, 88000, 77000, 89000, 100000],
-    //  2- only one number by column, with label.
-    //    i.e.: data =
-            // [{"okay": 10},
-            // {"nope": 8},
-            // {"yeah": 14},
-            // {"bad":   5},
-            // {"soso": 9}],
-    //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
-    //    i.e.: data = [
-            //  [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
-            //  [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2015"],
-            //  [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
-            //  [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],
 
-    // SECOND ARGUMENT
-    //  chart options
     {
       // bigFrame Features:
       frameHeight: 400, frameWidth: 800, /* consider color and border features*/
       setBigFrameColor: "mediumspringgreen", setBigFrameBorder: "solid 0.5px black",
 
       // chartFrame features:
-      setFrameColor: "darksalmon",
+      setFrameColor: "lavender",
       // setFrameColor: "lightyellow",
-      setBarColor: "MediumAquamarine", setEmphasis: true,
+      setBarColor: "peru", setEmphasis: true,
 
       // chartLabelFeatures:
-      chartLabelText: "Biennial Budget", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "brown",
-          chartLabelBorder: "", /*chartLabelBackColor: "red",*/
+      chartLabelText: "Historical Biennial Budget for the IT division", chartLabelFontFamily: "times", chartLabelFontSize: 0, chartLabelFontColor: "blue",
+      chartLabelBorder: "solid grey 0.5px", /*chartLabelBackColor: "red",*/
 
       // X Axis features:
       setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
