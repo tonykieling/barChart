@@ -43,7 +43,7 @@ In this case, data is:
 >       [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
 >       [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],      
         
-![Arrays of Arrays](pictures/picture2.png)
+![Arrays of Arrays](pictures/picture1.png)
 
 
 
@@ -55,9 +55,9 @@ It is possible to set the following:
   * frameWidth - big frame's width (pixels),
   * color - it is the color for the big frame (it can receive any valid string, decimal or hexadecimal), and
   * border - border frame's features (format and color).
-  *i.e.:*
-      frameHeight: 400, frameWidth: 800,
-      setBigFrameColor: "#E0E4E3", setBigFrameBorder: "solid 0.5px black",
+>  *i.e.:*
+>      frameHeight: 400, frameWidth: 800,
+>      setBigFrameColor: "#E0E4E3", setBigFrameBorder: "solid 0.5px black",
 
 2. chartFrame features. Some features related to the chart, such as:
   * setFrameColor - it will define the chart frame's background color,
