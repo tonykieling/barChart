@@ -18,24 +18,34 @@ The function is called by: *barChart(data, options, element)*.
 Bellow follow one example for each type of data structure:
 * **Simple Array**
 In this case, data is:
-        //INSERT THE DATA
+      [100000, 200000, 150000, 350000, 88000, 77000, 89000, 100000],
 
-![Simple Array](url)
-        //PICTURE HERE
+Bar Chart is:
+![Simple Array](pictures/picture3.png])
+
 
 * **Array of Objects**
 In this case, data is:
-        //INSERT THE DATA
-        
-![Arrays of Objects](url)
-        //PICTURE HERE
+      [{"okay": 10},
+       {"nope": 8},
+       {"yeah": 14},
+       {"bad":   5},
+       {"soso": 9}],
+
+Bar Chart is:        
+![Arrays of Objects](pictures/picture2.png)
+
 
 * **Arrays of Arrays**
 In this case, data is:
-        //INSERT THE DATA
+      [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
+       [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2015"],
+       [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
+       [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],      
         
-![Arrays of Arrays](url)
-        //PICTURE HERE
+![Arrays of Arrays](pictures/picture2.png)
+
+
 
 ## About options fields
 Options are divided in 555555555555555555 parts:
