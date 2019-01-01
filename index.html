@@ -20,10 +20,12 @@
   <h1>Bar Chart Project</h1>
 </header>
 <p>This is a page with some examples of the barChart function in order to provide visualization to some given arguments, which will be
-  showed bellow the charts. More information, please check
-   <a href="https://github.com/tonykieling/barChart/blob/master/README.md">README.md file</a> at the GitHub Repository. <br
+  presented bellow the charts. </p>
+<p>More information, please check
+   <a href="https://github.com/tonykieling/barChart/blob/master/README.md" target="_blank">README.md</a> file at the GitHub Repository.
+   <br><br>
 
-
+<br>
 The charts bellow are NOT pictures but real charts rendered when the page is load.</p>
 <br>
 <p> <h2>1- First example</h2></p>
@@ -34,39 +36,40 @@ The charts bellow are NOT pictures but real charts rendered when the page is loa
   </p>
 
   <br>
-  <p>PASTE THE FUNCTION CALLER WITH THE ARGUMENTS</p>
+  <p>The caller function was set in the follwing way:</p>
   <xmp>
 10      drawBarChart(
-11        // FIRST ARGUMENT - data
+11       // FIRST ARGUMENT - data
 12                [100000, 200000, 150000, 350000, 88000, 77000, 89000, 100000],
 13
-14       {
-15          // bigFrame Features:
-            frameHeight: 400, frameWidth: 800, /* consider color and border features*/
+14       // SECOND ARGUMENT - options
+15       {
+            // bigFrame Features:
+            frameHeight: 400, frameWidth: 800,
             setBigFrameColor: "mediumspringgreen", setBigFrameBorder: "solid 0.5px black",
 
-            // chartFrame features:
-20          setFrameColor: "lavender",
+20          // chartFrame features:
+            setFrameColor: "lavender",
             setEmphasis: true,
             setBarColor: "peru",
 
-            // chartLabelFeatures:
-25          chartLabelText: "Historical Biennial Budget for the IT division", chartLabelFontFamily: "times", chartLabelFontSize: 0, chartLabelFontColor: "blue",
-            chartLabelBorder: "solid grey 0.5px", /*chartLabelBackColor: "red",*/
+25          // chartLabelFeatures:
+            chartLabelText: "Historical Biennial Budget for the IT division", chartLabelFontFamily: "times", chartLabelFontSize: 0, chartLabelFontColor: "blue",
+            chartLabelBorder: "solid grey 0.5px",
 
             // X Axis features:
-            setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
-30          //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
-            setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "top", /*top, bottom, middle and over*/
+30          setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
+            //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
+            setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
             setSpaceColumn: "small",
 
-            // Y Axis features
-35          setMaximunValue: 400000,
+35          // Y Axis features
+            setMaximunValue: 400000,
             numberOfDivisionsYAxis: 8, typeOfDivision: "absolute", setDivLabelFontSize: "",
             setDivisionsOverColumns: true,
 
-          },
-41
+40        },
+
           // THIRD ARGUMENT
           //  chart position, that is, in what element it's supposed to be placed
           "#barChartPlace1"
@@ -74,41 +77,142 @@ The charts bellow are NOT pictures but real charts rendered when the page is loa
   </xmp>
 
   <xmp>
-  Some notes:
-  1- The Y Axis is set to be absolute and with a maximun value of 400000 (lines 35 and 36).
-  2- For some user's reason, the divisions are better positione over the columns. (line 37)
-  3- the X Axis labels are number which were incremented in two at a time (line 29).
-  4- The columns' labels were set using top position (line 31)
+    Some notes:
+    1- The Y-axis is set to be absolute and with a maximum value of 400000 (lines 36 and 37).
+    2- For some user's reason, the divisions are better positioned over the columns (line 38).
+    3- The X-axis labels are number which were incremented in two at a time, starting in 2004 (line 29).
+     It could use setXLabel as "month" and setXLabelStarts as the first desired month and the system will fill automatically the other X-labels.
+    4- The columns' labels were set using "over" position (line 31).
+    5- The enphasis mode is on (line 21), which allows the column hoved get bigger and has focus, what can help to visualize.
+    6- The chartLabel was set to has a border (line 26).
   </xmp>
 
   <br><br>
-
-  <p> <h2>Second Example</h2></p>
-
+  <p> <h2>2- Second Example</h2></p>
   <p id=barChartPlace2>
     <!-- <script src="assets/js/script.js"></script> -->
     <script src="assets/js/script2.js"></script>
   </p>
-
   <br>
-  <p>PASTE THE FUNCTION CALLER WITH THE ARGUMENTS</p>
+  <p>The caller function was set in the follwing way:</p>
+
+  <xmp>
+10      drawBarChart(
+11        // FIRST ARGUMENT
+12        // data
+13                 [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "MediumVioletRed	", "teal"], "2014"],
+14                 [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "MediumVioletRed", "teal"], "2015"],
+15                 [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "MediumVioletRed	", "teal"], "2016"],
+                   [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "MediumVioletRed	", "teal"], "2017"]],
+
+
+          // SECOND ARGUMENT
+20        //  chart options
+          {
+            // bigFrame Features:
+            frameHeight: 350, frameWidth: 900,
+            setBigFrameColor: "mediumspringgreen", setBigFrameBorder: "solid 0.5px black",
+25
+            // chartFrame features:
+            setFrameColor: "darksalmon",
+            // setFrameColor: "lightyellow",
+            setBarColor: "MediumAquamarine", setEmphasis: true,
+30
+            // chartLabelFeatures:
+            chartLabelText: "Fall Winter (2017/2018) Sales by region", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "brown",
+            chartLabelBorder: "", /*chartLabelBackColor: "red",*/
+
+35          // X Axis features:
+            setXLabel: "month", setXLabelStarts: "oct", setXLabelInc: 2,
+            setColumnsFont: 10, setColumnWithLabel: false, setLabelColumnPos: "over", /*top, bottom, middle and over*/
+            setSpaceColumn: "small",
+
+40          // Y Axis features
+            setMaximunValue: 120,
+            numberOfDivisionsYAxis: 8, typeOfDivision: "absolute", setDivLabelFontSize: "", setDivisionsOverColumns: false,
+
+          },
+45
+        // THIRD ARGUMENT
+        //  chart position, that is, in what element it's supposed to be placed
+        "#barChartPlace2"
+       );
+  </xmp>
+
+  <xmp>
+    Some notes:
+    1- The size of the frame has a different size to the others (line 23)
+    2- There is legend for differenciate multicolumns (data is array of arrays).
+    3- Because setEmphasis is ON, when hovered the legend color, change the respectivity columns (line 29).
+    4- The chart will be hold in the #barChartPlace2 id's page (line 48).
+    5- If the user sets setXLabel (line 36), the label (last item in each array) will be ignored, otherwise, the label will be considered.
+    6- setColumnWithLabel is OFF, no label (line 37).
+  </xmp>
+
 
   <br><br>
-
   <p> <h2>3- Third example</h2></p>
-
   <p id=barChartPlace3>
     <!-- <script src="assets/js/script.js"></script> -->
     <script src="assets/js/script3.js"></script>
   </p>
-
   <br>
-  <p>PASTE THE FUNCTION CALLER WITH THE ARGUMENTS</p>
+  <p>The caller function was set in the follwing way:</p>
 
-  <br><br>
+  <xmp>
+10      drawBarChart(
+11        // FIRST ARGUMENT - data
+12               [{"A": 10},
+13                {"B": 8},
+14                {"C": 14},
+15                {"D":   5},
+                  {"E": 9}],
+
+          // SECOND ARGUMENT
+          //  chart options
+20        {
+            // bigFrame Features:
+            frameHeight: 400, frameWidth: 800,
+            setBigFrameColor: "mediumspringgreen", setBigFrameBorder: "",
+
+25          // chartFrame features:
+            setFrameColor: "darksalmon",
+            // setFrameColor: "lightyellow",
+            setBarColor: "MediumAquamarine", setEmphasis: true,
+
+30          // chartLabelFeatures:
+            chartLabelText: "Chart Title", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "brown",
+            chartLabelBorder: "",
+
+            // X Axis features:
+35          setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
+            //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
+            setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "", /*top, bottom, middle and over*/
+            setSpaceColumn: "extra",
+
+40          // Y Axis features
+            setMaximunValue: 0,
+            numberOfDivisionsYAxis: 4, typeOfDivision: "percent", setDivLabelFontSize: "", setDivisionsOverColumns: false,
+
+          },
+45
+          // THIRD ARGUMENT
+          //  chart position, that is, in what element it's supposed to be placed
+          "#barChartPlace2"
+        );
+  </xmp>
+
+  <xmp>
+    Some notes:
+    1- setEmphasis is OFF (false), which does not give focus in the column.
+    2- The space between the columns is set to a extra one (line 38).
+    3- Because it is a Array of Objects structure, the label set (line 35) is ignored.
+    4- The division are set as "percent", and 4 parts (line 42).
+  </xmp>
+
+
 
 <footer>
-
 </footer>
 </body>
 

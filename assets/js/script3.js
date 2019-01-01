@@ -1082,50 +1082,38 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
   } // last }
 
   drawBarChart(
-    // FIRST ARGUMENT
-    // Data  can be:
-    //  1- only one number by column without label. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
-    //    i.e.: data =
-            // [100000, 200000, 150000, 350000, 88000, 77000, 89000, 100000],
-    //  2- only one number by column, with label.
-    //    i.e.: data =
-            // [{"okay": 10},
-            // {"nope": 8},
-            // {"yeah": 14},
-            // {"bad":   5},
-            // {"soso": 9}],
-    //  3- multiples numbers by column without label, but has to have the identifier for each number. The label can be set by the variable setXLabel and setXLabelStarts, bellow.
-    //    i.e.: data = [
-             [[[99, 88, 80, 70], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2014"],
-             [[41, 50, 45, 40], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2015"],
-             [[55, 66, 70, 59], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2016"],
-             [[22, 33, 40, 30], ["North", "South", "East", "West"], ["navy", "olive", "orange", "teal"], "2017"]],
+    // FIRST ARGUMENT - data
+            [{"A": 10},
+            {"B": 8},
+            {"C": 14},
+            {"D":   5},
+            {"E": 9}],
 
     // SECOND ARGUMENT
     //  chart options
     {
       // bigFrame Features:
       frameHeight: 400, frameWidth: 800, /* consider color and border features*/
-      setBigFrameColor: "mediumspringgreen", setBigFrameBorder: "solid 0.5px black",
+      setBigFrameColor: "darksalmon", setBigFrameBorder: "",
 
       // chartFrame features:
-      setFrameColor: "darksalmon",
+      setFrameColor: "MediumAquamarine",
       // setFrameColor: "lightyellow",
-      setBarColor: "MediumAquamarine", setEmphasis: true,
+      setBarColor: "MediumBlue", setEmphasis: false,
 
       // chartLabelFeatures:
-      chartLabelText: "Biennial Budget", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "brown",
-          chartLabelBorder: "", /*chartLabelBackColor: "red",*/
+      chartLabelText: "Chart Title", chartLabelFontFamily: "Arial", chartLabelFontSize: 0, chartLabelFontColor: "brown",
+      chartLabelBorder: "",
 
       // X Axis features:
       setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
         //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
-      setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "top", /*top, bottom, middle and over*/
-      setSpaceColumn: "small",
+      setColumnsFont: 6, setColumnWithLabel: true, setLabelColumnPos: "", /*top, bottom, middle and over*/
+      setSpaceColumn: "extra",
 
       // Y Axis features
-      setMaximunValue: 120,
-      numberOfDivisionsYAxis: 8, typeOfDivision: "absolute", setDivLabelFontSize: "", setDivisionsOverColumns: false,
+      setMaximunValue: 0,
+      numberOfDivisionsYAxis: 4, typeOfDivision: "percent", setDivLabelFontSize: "", setDivisionsOverColumns: false,
 
     },
 

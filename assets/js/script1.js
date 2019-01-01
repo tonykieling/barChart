@@ -1102,12 +1102,12 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
       // X Axis features:
       setXLabel: "number", setXLabelStarts: 2004, setXLabelInc: 2,
         //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
-      setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "top", /*top, bottom, middle and over*/
+      setColumnsFont: 10, setColumnWithLabel: true, setLabelColumnPos: "over", /*top, bottom, middle and over*/
       setSpaceColumn: "small",
 
       // Y Axis features
       setMaximunValue: 400000,
-      numberOfDivisionsYAxis: 8, typeOfDivision: "absolute", setDivLabelFontSize: "", setDivisionsOverColumns: false,
+      numberOfDivisionsYAxis: 8, typeOfDivision: "absolute", setDivLabelFontSize: "", setDivisionsOverColumns: true,
 
     },
 

@@ -8,10 +8,10 @@ It was asked to the students to develop a function in order to draw a bar chart 
 
 The function is called by: *barChart(data, options, element)*.
 - **Data** is the set of number that will be shown up in the bars. It may be 3 kinds of estrucutures:
-  * Simple array, only numbers
-  * Array of objects, where the key is the label and the value is the number
-  * Array of arrays with 4 arrays. The first is the numbers, second is the label for each subcolumn
-      third contains the colors for each subcolumn, and the forth is the X-axis label
+  * Simple array, only numbers;
+  * Array of objects, where the key is the label and the value is the number;
+  * Array of arrays with 4 arrays. The first is the numbers, second is the label for each subcolumn,
+      third contains the colors for each subcolumn, and the forth is the X-axis label.
 - **Options** contain the fields that the user can set, such as colors, text, sizes, and some chart bar features.
 - **Element** is the spot where the chart will be rendered.
 
@@ -23,6 +23,7 @@ Bar Chart is:
 ![Simple Array](pictures/picture3.png)
 
 
+
 * **Array of Objects**
 >      [{"okay": 10},
 >       {"nope": 8},
@@ -32,6 +33,7 @@ Bar Chart is:
 
 Bar Chart is:        
 ![Arrays of Objects](pictures/picture2.png)
+
 
 
 * **Arrays of Arrays**
@@ -61,10 +63,10 @@ It is possible to set the following:
   * setBarColor - it will be applied for charts with simple columns, and
   * setEmphasis (true or false) - when true, it will provide a different style for the hoved columns.
 
-3. chartLabelFeatures defines 
+3. chartLabelFeatures defines:
   * chartLabelText - it is the chart's title,
   * chartLabelFontFamily - it is the font family,
-  * chartLabelFontSize - size of the font. If the user defines a very big size, the system will adjust in order to fit in the label element
+  * chartLabelFontSize - size of the font. If the user defines a very big size, the system will adjust in order to fit it in the label element,
   * chartLabelFontColor - it is the color of the title,
   * chartLabelBorder - it defines border to the title, and
   * chartLabelBackColor - it is the background color. If it is not defined, the color will be the same as the big frame's background.
@@ -72,7 +74,7 @@ It is possible to set the following:
 4. X-Axis features has:
   * setXLabel - it can receive "month" or "number" as a X label,
   * setXLabelStarts - for the cases above, the system can start in a specific month or number. If month, the others labels will be filled automatically,
-  * setXLabelInc - applied to "numbers", it can increase (positive number) or decrease (for negative numbers,
+  * setXLabelInc - applied to "numbers", it can increase (positive number) or decrease (for negative numbers),
   * setColumnsFont - font's size,
   * setColumnWithLabel (true or false) - it turns on or off the labels for the columns,
   * setLabelColumnPos - positioning of the label related to the column. It can be *top*, *bottom*, *middle* or *over*,
@@ -93,4 +95,6 @@ It is possible to set the following:
 * Deal with currencies symbols.
 * Figure out better the case of one more label for the Xs labels, such as year under the months.
 * Performe a further code's and its functions review.
+* Have to review Y-AxisMaximumValue.
+* Automatic X-axis label has to be applied for Array of Arrays structure.
 
