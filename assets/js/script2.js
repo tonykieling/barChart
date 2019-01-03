@@ -1107,7 +1107,7 @@ function setFontSize(contentF, hostElement, attributeF, maxF, userFontSize, oper
           chartLabelBorder: "", /*chartLabelBackColor: "red",*/
 
       // X Axis features:
-      setXLabel: "month", setXLabelStarts: "oct", setXLabelInc: 2,
+      setXLabel: "month", setXLabelStarts: "mar", setXLabelInc: 2,
         //it will consider only the numbers passed by the user, regardless whether there is label. The label will be month starting in setXLabelStarts
       setColumnsFont: 10, setColumnWithLabel: false, setLabelColumnPos: "top", /*top, bottom, middle and over*/
       setSpaceColumn: "small",

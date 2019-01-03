@@ -96,5 +96,5 @@ It is possible to set the following:
 * Figure out better the case of one more label for the Xs labels, such as year under the months.
 * Performe a further code's and its functions review.
 * Have to review Y-AxisMaximumValue.
-* Automatic X-axis label has to be applied for Array of Arrays structure.
+* Receiving negative numbers as data and plot it.
 
