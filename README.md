@@ -50,42 +50,42 @@ Bar Chart is:
 Options are divided in 5 parts:
 1. bigFrame Features. This frame will hold all the elements for the bar chart.
 It is possible to set the following:
-  * frameHeight - big frame's height (pixels),
-  * frameWidth - big frame's width (pixels),
-  * color - it is the color for the big frame (it can receive any valid string, decimal or hexadecimal), and
-  * border - border frame's features (format and color).
+  1.1 _**frameHeight**_ - big frame's height (pixels),
+  1.2 _**frameWidth**_ - big frame's width (pixels),
+  1.3 _**color**_ - it is the color for the big frame (it can receive any valid string, decimal or hexadecimal), and
+  1.4 _**border**_ - border frame's features (format and color).
 >  *i.e.:*
 >      frameHeight: 400, frameWidth: 800,
 >      setBigFrameColor: "#E0E4E3", setBigFrameBorder: "solid 0.5px black",
 
 2. chartFrame features. Some features related to the chart, such as:
-  * setFrameColor - it will define the chart frame's background color,
-  * setBarColor - it will be applied for charts with simple columns, and
-  * setEmphasis (true or false) - when true, it will provide a different style for the hoved columns.
+  2.1 _**setFrameColor**_ - it will define the chart frame's background color,
+  2.2 _**setBarColor**_ - it will be applied for charts with simple columns, and
+  2.3 _**setEmphasis**_ (true or false) - when true, it will provide a different style for the hoved columns.
 
 3. chartLabelFeatures defines:
-  * chartLabelText - it is the chart's title,
-  * chartLabelFontFamily - it is the font family,
-  * chartLabelFontSize - size of the font. If the user defines a very big size, the system will adjust in order to fit it in the label element,
-  * chartLabelFontColor - it is the color of the title,
-  * chartLabelBorder - it defines border to the title, and
-  * chartLabelBackColor - it is the background color. If it is not defined, the color will be the same as the big frame's background.
+  3.1 _**chartLabelText**_ - it is the chart's title,
+  3.2 _**chartLabelFontFamily**_ - it is the font family,
+  3.3 _**chartLabelFontSize**_ - size of the font. If the user defines a very big size, the system will adjust in order to fit it in the label element,
+  3.4 _**chartLabelFontColor**_ - it is the color of the title,
+  3.5 _**chartLabelBorder**_ - it defines border to the title, and
+  3.6 _**chartLabelBackColor**_ - it is the background color. If it is not defined, the color will be the same as the big frame's background.
 
 4. X-Axis features has:
-  * setXLabel - it can receive "month" or "number" as a X label,
-  * setXLabelStarts - for the cases above, the system can start in a specific month or number. If month, the others labels will be filled automatically,
-  * setXLabelInc - applied to "numbers", it can increase (positive number) or decrease (for negative numbers),
-  * setColumnsFont - font's size,
-  * setColumnWithLabel (true or false) - it turns on or off the labels for the columns,
-  * setLabelColumnPos - positioning of the label related to the column. It can be *top*, *bottom*, *middle* or *over*,
-  * setSpaceColumn - it defines the space between the columns. 3 types: "small", "normal" or "extra".
+  4.1 _**setXLabel**_ - it can receive "month" or "number" as a X label,
+  4.2 _**setXLabelStarts**_ - for the cases above, the system can start in a specific month or number. If month, the others labels will be filled automatically,
+  4.3 _**setXLabelInc**_ - applied to "numbers", it can increase (positive number) or decrease (for negative numbers),
+  4.4 _**setColumnsFont**_ - font's size,
+  4.5 _**setColumnWithLabel**_ (true or false) - it turns on or off the labels for the columns,
+  4.6 _**setLabelColumnPos**_ - positioning of the label related to the column. It can be *top*, *bottom*, *middle* or *over*,
+  4.7 _**setSpaceColumn**_ - it defines the space between the columns. 3 types: "small", "normal" or "extra".
 
 5. Y-Axis features has:
-  * setMaximunValue - is the parameter for the Y-axis. If no value, the maximum chart's height will be a small number (offset) after the maximum's data.
-  * numberOfDivisionsYAxis - how many divisions in the Y-axis,
-  * typeOfDivision - if "percent" or absolute,
-  * setDivLabelFontSize - font size, and
-  * setDivisionsOverColumns (true or false) - it will show the division's lines over or under the columns.
+  5.1 _**setMaximunValue**_ - is the parameter for the Y-axis. If no value, the maximum chart's height will be a small number (offset) after the maximum's data.
+  5.2 _**numberOfDivisionsYAxis**_ - how many divisions in the Y-axis,
+  5.3 _**typeOfDivision**_ - if "percent" or absolute,
+  5.4 _**setDivLabelFontSize**_ - font size, and
+  5.5 _**setDivisionsOverColumns**_ (true or false) - it will show the division's lines over or under the columns.
 
 
 
