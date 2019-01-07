@@ -92,9 +92,8 @@ It is possible to set the following:
 
 ## Improvements:
 * There is a function to adjust the fontSize attribute within the current element, and it's working to the labelChart element. Applying this function to other elements, such as the Y and X-Axis labels, the legend and columns labels, would give a better outcome.
-* Deal with currencies symbols.
-* Figure out better the case of one more label for the Xs labels, such as year under the months.
-* Performe a further code's and its functions review.
-* Have to review Y-AxisMaximumValue.
+* Dealing with currencies symbols.
+* Figuring out better the case of one more label for the Xs labels, such as year under the months.
+* Performing a further code's and its functions review.
 * Receiving negative numbers as data and plot it.
 
